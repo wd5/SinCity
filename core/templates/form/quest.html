@@ -1,0 +1,12 @@
+{% load content %}
+
+<div id="js-quest" class="js-tab-content g-hidden">
+    {% if profile_form.quest %}
+        {{ profile_form.quest }}
+    {%  else %}
+        {{ profile_form.instance.quest }}
+    {% endif %}
+
+    {% locker 'quest' profile_form is_superuser %}
+    <br><br>
+</div>

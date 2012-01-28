@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load content %}
+
+{% block content %}
+    <h2>Автобус</h2>
+	<p>{{ page.content }}</p>
+
+	{% if profile %}
+		<p>
+		{% if profile.bus %}
+			Я передумал, я <a href="?bus=off">не поеду</a> на общем автобусе.
+		{% else %}
+			Я <a href="?bus=on">тоже хочу</a> поехать на общем автобусе.
+		{% endif %}
+		</p>
+	{% endif %}
+
+	<p>{% if passangers %}
+		Уже едут:
+		{% for profile in passangers %}
+			{{ profile.name }}{% if not forloop.last%},{% endif %}
+		{% endfor %}
+		(итого: {{ passangers|length }}).
+
+		{% else %}
+			Пока никого нет, вы будете первым.
+		{% endif %}
+	</p>
+{% endblock %}

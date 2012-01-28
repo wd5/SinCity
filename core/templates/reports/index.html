@@ -1,0 +1,31 @@
+{% extends "reports/base.html" %}
+
+{% block content %}
+    <p>
+	    <ul>
+	        <li><a href="/reports/actions/">Акции</a></li>
+	        <li><a href="/reports/money/">Деньги</a></li>
+            <li><a href="/reports/contacts/">Общая рассылка</a></li>
+            <li><a href="/reports/paid/">Оплата</a></li>
+            <li><a href="/reports/layers/">Пласты</a></li>
+	        <li>&nbsp</li>
+            <li><a href="/admin/core/profile/">Все игроки</a></li>
+            <li><a href="/reports/players_without_roles/">Игроки без утвержденных ролей</a></li>
+            <li><a href="/admin/core/roleconnection/">Связи ролей</a></li>
+	    </ul>
+    </p>
+	<br>
+	<p>
+		Замороженных ролей: {{ locked_roles_amount }}
+	</p>
+    <br>
+    <p>Почта игроков: {{ emails }}</p>
+    <br>
+    {% regroup profiles by role.get_ticket_level_display as profiles_list %}
+
+    {% for group in profiles_list %}
+        <br><br>
+        <h3>{{ group.grouper }}</h3>
+        {% for item in group.list %}{{ item.user.email }}, {% endfor %}
+    {% endfor %}
+{% endblock %}

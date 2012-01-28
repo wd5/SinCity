@@ -1,0 +1,5 @@
+{% load content %}
+{% if field %}
+     <img src="{% MEDIA_URL %}i/lock-unlock.png" id='{{ field }}_lock' {% if locked %}style="display:none"{% endif %} onclick="lock('{{ field }}', 'lock')" title="Заблокировать">
+     <img src="{% MEDIA_URL %}i/lock.png" id='{{ field }}_unlock' {% if not locked %}style="display:none"{% endif %} onclick="lock('{{ field }}', 'unlock')" title="Разблокировать">
+{% endif %}

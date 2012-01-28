@@ -1,0 +1,23 @@
+{% extends "reports/base.html" %}
+
+{% block content %}
+    <table>
+        <tr><th>Класс</th>
+        <th>Роль</th>
+        <th>Игрок</th>
+        <th>Email</th>
+        <th>ICQ</th>
+        </tr>
+        
+        {% for profile in profiles %}
+            <tr class="{% cycle 'odd' 'even' %}">
+            <td>{{ profile.role.get_ticket_level_display }}</td>
+            <td>{{ profile.role }}</td>
+            <td>{{ profile}}</td>
+            <td>{{ profile.user.email }}</td>
+            <td>{{ profile.icq }}</td>
+
+            </tr>            
+        {% endfor %}
+    </table>
+{% endblock %}

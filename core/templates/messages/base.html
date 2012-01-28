@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load content %}
+
+{% block content %}
+    <h1>Личные сообщения</h1>
+	<div class="b-messages">
+		<table>
+			<td class="menu">
+				<ul class="subnavilist">
+				    <li><a href="{% url messages_inbox %} ">&raquo;&nbsp;Входящие</a></li>
+				    <li><a href="{% url messages_outbox %} ">&raquo;&nbsp;Отправленные</a></li>
+				    <li><a href="{% url messages_compose %} ">&raquo;&nbsp;Написать</a></li>
+				    <li><a href="{% url messages_trash %} ">&raquo;&nbsp;Корзина</a></li>
+				</ul>
+			</td>
+			<td>
+				{% block messages_content %}{% endblock %}
+			</td>
+		</table>
+	</div>			  
+{% endblock %}

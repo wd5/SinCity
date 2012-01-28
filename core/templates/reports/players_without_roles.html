@@ -1,0 +1,19 @@
+{% extends "reports/base.html" %}
+
+{% block content %}
+    <h2>Игроки без утвержденных ролей</h2>
+    <table>
+        <tr><th>Игрок</th>
+            <th>Роль</th>
+            <th> </th>
+        </tr>
+        
+        {% for profile in profiles %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td>{{ profile.name }}</td>
+                <td>{{ profile.role|default:"-" }}</td>
+                <td>{{ profile.form_link|safe }}</td>
+            </tr>            
+        {% endfor %}
+    </table>
+{% endblock %}

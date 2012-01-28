@@ -1,0 +1,32 @@
+
+<div class="form_menu">
+    <ul>
+        <li class="form_menu_active js-menu-tab js-menu-tab-profile" data-tab="profile">Профиль</li>
+        {% if user_present %}
+            <li class="js-menu-tab js-menu-tab-connections" data-tab="connections">Связи</li>
+            <li class="js-menu-tab js-menu-tab-quest" data-tab="quest">Квента</li>
+            <li class="js-menu-tab js-menu-tab-layers" data-tab="layers">Пласты</li>
+        {% endif %}
+    </ul>
+</div>
+
+<script type="text/javascript">
+    function activate(tab){
+        $(".js-tab-content").hide()
+        $("#js-" + tab).show()
+
+        $(".js-menu-tab").removeClass("form_menu_active");
+        $(".js-menu-tab-" + tab).addClass("form_menu_active");
+    }
+
+    $(function(){
+        $(".js-menu-tab").each(function(){
+
+            $(this).click(function(){
+                activate($(this).data('tab'));
+            })
+
+        })
+    })
+
+</script>

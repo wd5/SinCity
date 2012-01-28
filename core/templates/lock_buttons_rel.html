@@ -1,0 +1,5 @@
+{% load content %}
+{% if rel %}
+     <img src="{% MEDIA_URL %}i/lock-unlock.png" id='rel_{{ rel.id }}_lock' {% if locked %}style="display:none"{% endif %} onclick="lock_rel('{{ rel.id }}', 'lock')" title="Заблокировать">
+     <img src="{% MEDIA_URL %}i/lock.png" id='rel_{{ rel.id }}_unlock' {% if not locked %}style="display:none"{% endif %} onclick="lock_rel('{{ rel.id }}', 'unlock')" title="Разблокировать">
+{% endif %}

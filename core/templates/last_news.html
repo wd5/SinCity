@@ -1,0 +1,10 @@
+{% load russian %}
+
+<div class="b-news">
+	{% for announce in news %}
+		<div class="b-news_date">{{ announce.date_created|human_date }}</div>
+		<div class="b-news_content">{{ announce.content|safe }}</div>
+	{% endfor %}
+
+	<div style="font-size: 80%; margin-bottom: 5px;"><a href="/news" title="Новости">все новости &gt;&gt;</a></div>
+</div>

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load content %}
+
+{% block head %}
+    <script type="text/javascript" src="{% MEDIA_URL %}js/jquery.ui.core.js"></script>    
+    <script type="text/javascript" src="{% MEDIA_URL %}js/jquery.ui.widget.js"></script>    
+    <script type="text/javascript" src="{% MEDIA_URL %}js/jquery.ui.position.js"></script>    
+    <script type="text/javascript" src="{% MEDIA_URL %}js/jquery.ui.tooltip.js"></script>    
+	  <script>
+	  $(document).ready(function(){
+	    $(".b-roles").tooltip();
+	  });
+	  </script>
+
+{% endblock %}
+
+{% block content %}
+    <div class="level_panel">
+    {% for level in levels %}
+        <a class="level_link" href="/roles?level={{ level.0 }}">
+	        <span class="level_tab {% ifequal level.0 current_level%}level_tab_current{% endifequal %}">
+	            {{ level.1 }}
+	        </span>
+        </a> &nbsp;
+    {% endfor %}
+    </div>
+
+    <table class="b-roles" cellspacing="0">
+        <tr class="b-roles_header">
+            <th>Имя персонажа</th>
+            <th>Профессия</th>
+            <th>Пол</th>
+            <th>Возраст</th>
+            <th>Страна</th>
+            <th colspan="2">Игрок</th>
+        </tr>
+        {% for role in roles %}
+            <tr class="{% cycle 'odd' 'even' %}{% if role.first %} role_separator{% endif %}">
+                <td><div title="{{ role.description }}">{{ role.name }}</div></td>
+                <td>{{ role.profession }}</td>
+                <td>{{ role.get_sex_display }}</td>
+                <td>{{ role.age }}</td>
+                <td>{{ role.country }}</td>
+                <td>{% if role.profile %}{{ role.profile.user.username }}{% else %}&nbsp;{% endif %}</td>
+                <td>{% if role.profile %}
+                        {{ role.profile.name }} 
+                        {% if user %}
+                            &nbsp;<a href="{% url messages_compose %}?recipient={{ role.profile.user.username }}" title="Личное сообщение"
+                            ><img class="img_link" src="{% MEDIA_URL %}i/email.png"></a>
+                        {% endif %}
+                {% else %}&nbsp;{% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    
+
+{% endblock %}

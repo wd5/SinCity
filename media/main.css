@@ -1,0 +1,327 @@
+*
+{
+    padding:0;
+    margin:0;
+}
+
+.g-hidden{
+    display: none;
+}
+
+body
+{
+    background-color: #FBF6F2;
+    width: 100%;
+    height: 100%;
+    font-family: Arial;
+    font-size: 14px;
+}
+
+.b-top
+{
+    text-align: center;
+}
+
+
+.b-top img
+{
+    position: relative;
+    margin-bottom: -43px;
+    border: 0;
+}
+
+.b-table-container
+{
+    border-top: 1px solid black;
+    height: 100%;
+}
+
+.main-table
+{
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.main_table th, .main_table td
+{
+    border: 0;
+    padding: 0;
+    margin: 0;
+    vertical-align: top;
+    border-collapse: collapse;
+}
+
+.b-left-column
+{
+    background-color: #d4d4d4;
+    text-align: center;
+    vertical-align: top;
+    padding: 2px 5px 2px 5px;
+    width: 200px;
+}
+
+.b-right-column
+{
+    background-color: #d4d4d4;
+    text-align: center;
+    vertical-align: top;
+    padding: 2px 5px 2px 5px;
+    width: 180px;
+}
+
+.l-gap
+{
+    width: 2%;
+    background-color: #ededed;
+}
+
+.b-content
+{
+    padding: 48px 7px 7px 7px;
+    background-color: #ededed;
+    width: 100%;
+    vertical-align: top;
+}
+
+.b-content p
+{
+    margin-bottom: 10px;
+}
+
+.level_panel
+{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.level_tab
+{
+    border: 1px solid black;
+    padding: 5px;
+}
+
+.level_tab_current
+{
+    background-color: #ccc;
+}
+
+a.level_link:link, a.level_link:active,
+a.level_link:visited, a.level_link:hover
+{
+    color: black;
+    text-decoration: none
+}
+
+a.b-black-link img
+{
+    color: black;
+}
+
+.b-roles
+{
+    width: 100%;
+    background-color: white;
+}
+
+.b-roles td
+{
+    vertical-align: top;
+    padding: 0 7px 15px 2px;
+}
+
+.b-roles tr.odd
+{
+    background-color: #f5f5f5;
+}
+
+.b-roles th
+{
+    border-bottom: 2px solid black;
+}
+
+.role_separator td
+{
+    border-top: 1px solid grey;
+}
+
+.img_link
+{
+    border: 0;
+}
+
+h1
+{
+    padding-bottom: 15px;
+}
+
+
+.ui-tooltip {
+    padding:8px;
+    position:absolute;
+    z-index:9999;
+    -o-box-shadow: 0 0 5px #aaa;
+    -moz-box-shadow: 0 0 5px #aaa;
+    -webkit-box-shadow: 0 0 5px #aaa;
+    box-shadow: 0 0 5px #aaa;
+    width: 400px;
+    background-color: white;
+    border: 1px solid black;
+}
+/* Fades and background-images don't work well together in IE6, drop the image */
+* html .ui-tooltip {
+    background-image: none;
+}
+body .ui-tooltip { border-width:2px; }
+
+.profile_table .title
+{
+    padding-right: 5px;
+    border-bottom: 1px solid #ccc;
+}
+
+.form_error
+{
+    color: red;
+}
+
+.form_menu
+{
+    border-bottom: 1px solid gray;
+    padding-bottom: 5px;
+    margin: 10px 0;
+}
+
+.form_menu ul li
+{
+    display: inline;
+    margin: 5px 25px 5px 5px;
+    border: 1px solid gray;
+    padding:  8px 10px 5px 10px;
+    font-size: 120%;
+
+    background-color: #dcdcdc;
+
+    cursor: pointer;
+}
+
+.form_menu ul:first-child
+{
+    margin-left: 50px;
+}
+
+.form_menu_active
+{
+    background-color: #ededed !important;
+    border-bottom: 1px solid #ededed !important;
+}
+
+.b-reports
+{
+    margin: 10px;
+    background-color: #ededed;
+}
+
+.b-reports th
+{
+    border-bottom: 1px solid #ccc;
+    padding-right: 5px;
+}
+
+.b-reports td
+{
+    padding: 0 10px 5px 0;
+}
+
+.b-reports tr.odd
+{
+    background-color: #f5f5f5;
+}
+
+.post
+{
+    clear: both;
+    font-family: Times New Roman;
+}
+
+.post-sep
+{
+    clear: both;
+    margin-bottom: 30px;
+}
+
+.b-messages td
+{
+    vertical-align: top;
+    padding: 5px;
+}
+
+.b-messages td.menu
+{
+    vertical-align: top;
+    border-right: 1px solid gray;
+    padding-right: 15px;
+}
+
+.forum_threads
+{
+    margin: 10px 0 30px 20px;
+}
+
+.forum_threads li
+{
+    list-style: none;
+    margin-bottom: 5px;
+}
+
+.b-thread
+{
+    margin-bottom: 30px
+}
+
+.b-thread td
+{
+    vertical-align: top;
+    padding: 5px;
+}
+
+.b-thread .date
+{
+    color: grey;
+    font-size: 80%;
+}
+
+.b-thread-user
+{
+    border-right: 1px solid black;
+}
+
+.b-bottom-menu
+{
+    text-align: center;
+    font-size: 120%;
+    margin-top: 20px;
+}
+
+.b-bottom-menu a:link, .b-bottom-menu a:hover,
+.b-bottom-menu a:active, .b-bottom-menu a:visited
+{
+    color: black;
+}
+
+.b-news
+{
+    text-align: left;
+    margin: 10px 0 0 24px;
+}
+
+.b-news_date
+{
+    font-size: 80%;
+    font-weight: bold;
+}
+
+.b-news_content
+{
+    margin-bottom: 12px;
+}

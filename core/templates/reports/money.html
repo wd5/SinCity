@@ -1,0 +1,25 @@
+{% extends "reports/base.html" %}
+
+{% block content %}
+    <table>
+        <tr><th>Игрок</th>
+        <th>Персонаж</th>
+        <th>Счет в кафе, шилл.</th>
+        <th>Счет в казино, шилл.</th>
+        <th>Наличные, шилл.</th>
+        <th>Чековая книжка, ф.</th>
+        </tr>
+        
+        {% for profile in profiles %}
+            <tr class="{% cycle 'odd' 'even' %}">
+            <td>{{ profile.user.username }}</td>
+            <td>{% if profile.role %}{{ profile.role }}{% else %}-{% endif %}</td>
+            <td>{{ profile.money_cafe }}</td>
+            <td>{{ profile.money_casino }}</td>
+            <td>{{ profile.money_cache }}</td>
+            <td>{{ profile.money_check_pounds }}</td>
+           
+            </tr>            
+        {% endfor %}
+    </table>
+{% endblock %}

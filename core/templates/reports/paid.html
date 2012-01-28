@@ -1,0 +1,21 @@
+{% extends "reports/base.html" %}
+
+{% block content %}
+    <table>
+        <tr><th>Игрок</th>
+            <th>Роль</th>
+            <th>Оплачено</th>
+        </tr>
+        
+        {% for profile in profiles %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td>{{ profile.name }}</td>
+                <td>{{ profile.role }}</td>
+                <td>{% if profile.paid %}<span style="color: green;">Да</span>
+                    {% else %}<span style="color: red;">Нет</span>
+                    {% endif %}
+                </td>
+            </tr>            
+        {% endfor %}
+    </table>
+{% endblock %}

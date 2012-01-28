@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load content %}
+
+{% block content %}
+    <h2>{{ gallery.title }}</h2>
+    {% for photo in photos %}
+        <div style="float: left; margin-right: 10px;">
+            <div style="text-align: center">
+                <a href="{{ photo.image.url }}" class="b-black-link"><img src="{% MEDIA_URL %}{{ photo.image.get_thumbnail.0 }}"></a><br>
+                {{ photo.title|default:"&nbsp;" }}
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

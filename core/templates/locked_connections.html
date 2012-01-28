@@ -1,0 +1,14 @@
+{% load content %}
+{% if connections %}
+    <h2>Замороженные связи</h2>
+    <table>
+    {% for connection in connections %}
+        <tr>
+            <td style="vertical-align: top; font-weight: bold;">{{ connection.role_rel.name }}:</td>
+            <td>{{ connection.comment|linebreaks }}</td>
+            <td style="vertical-align: bottom;">{% if is_superuser %}{% locker_rel connection "" is_superuser %}{% endif %}</td>
+        </tr>
+    {% endfor %}
+    </table>
+    <br>
+{% endif %}

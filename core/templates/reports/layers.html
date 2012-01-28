@@ -1,0 +1,22 @@
+{% extends "reports/base.html" %}
+
+{% block content %}
+    <h2>Пласты</h2>
+    {% regroup layer_connections by layer as layers %}
+
+    {% for group in layers %}
+        <br><br>
+        <h3>{{ group.grouper }}</h3>
+        <table>
+
+        {% for item in group.list %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                <td>{{ item.role }}</td>
+                <td>{{ item.comment }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+    
+
+{% endblock %}
