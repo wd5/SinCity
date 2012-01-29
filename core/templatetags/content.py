@@ -2,9 +2,8 @@
 
 from django import template
 from django.conf import settings
-from django.utils.safestring import mark_safe
 
-from core.models import RoleConnection, News
+from core.models import RoleConnection, News, Article
 
 register = template.Library()
 
@@ -34,12 +33,17 @@ def locked_connections(profile, is_superuser):
     return {'connections': RoleConnection.objects.filter(role=profile.role, is_locked=True), 'is_superuser': is_superuser}
 
 
-@register.filter
-def br(text):
-    return mark_safe(text.replace("\n", "<br>\n"))
-
-
 @register.inclusion_tag('last_news.html')
 def last_news():
     news = News.objects.all().order_by('-date_created')[:5]
     return {'news': news}
+
+
+@register.inclusion_tag('blocks/b-navigation.html')
+def navigation():
+    articles = Article.objects.filter(parent__isnull=True)
+    subarticles = Article.objects.filter(parent__in=[article.id for article in articles])
+    for article in articles:
+        article.subarticles = [subarticle for subarticle in subarticles if subarticle.parent_id == article.id]
+
+    return {'articles': articles}

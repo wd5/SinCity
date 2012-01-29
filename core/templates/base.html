@@ -2,88 +2,108 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 
 <head>
-    <title>{% block title %}Титаник 2012{% endblock %}</title>
+    <title>{% block title %}Sin City 2012{% endblock %}</title>
 
     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
 
-    <link rel="stylesheet" href="{% MEDIA_URL %}main.css?5"/>
+    <link rel="stylesheet" href="{% MEDIA_URL %}main.css?1"/>
 
     <script type="text/javascript" src="http://yandex.st/jquery/1.6.2/jquery.min.js" charset="utf-8"></script>
+	<script src="{% MEDIA_URL %}js/dropdown.js" type="text/javascript"></script>
 
     {% block head %}{% endblock %}
 </head>
 <body>
+<!-- start: wrapper -->
+<div id="wrapper">
 
-<div class="b-top"><img src="{% MEDIA_URL %}i/top.png" alt="Титаник 2012" usemap="#Navigation" /></div>
-<map name="Navigation">
-  <area coords="0,0,603,119" href="/" alt="На главную">
-  <area coords="33,120,100,180" href="/info/" alt="Информация">
-  <area coords="107,120,176,180" href="/rules/" alt="Правила игры">
-  <area coords="190,120,250,180" href="/roles" alt="Список ролей">
-  <area coords="265,120,330,180" href="/form" alt="Форма заявки">
-</map>
+<!-- start: header -->
+<div id="header" align="center" font color="FF0000">
 
-{% block page %}
-	<div class="b-table-container">
-	<table class="main-table" cellspacing="0">
+<h1><a href="/">Sin City 2012</a></h1>
+
+</div>
+<!-- end: header -->
+
+<!-- NOTE: top page menu inserted here -->
+<!-- start: top page menu -->
+	{% navigation %}
+<!-- end: top page menu -->
+
+<div id="container">
+<table class="main">
 	<tr>
-	    <td class="b-left-column">
-	        <a href="{% url newspaper 1 %}"><img class="img_link" src="{% MEDIA_URL %}i/times.png" alt="Титаник 2012" /></a><br /><br />
-	        <a href="{% url newspaper 2 %}"><img class="img_link" src="{% MEDIA_URL %}i/economist.png" alt="Титаник 2012" /></a><br /><br />
-	        <a href="{% url newspaper 3 %}"><img class="img_link" src="{% MEDIA_URL %}i/guardian.png" alt="Титаник 2012" /></a><br /><br />
-	        <a href="{% url newspaper 4 %}"><img class="img_link" src="{% MEDIA_URL %}i/newyorkpost.png" alt="Титаник 2012" /></a>
-	    </td>
-	    <td class="l-gap"></td>
-	    <td class="b-content">{% block content %}{% endblock %}</td>
-	    <td class="l-gap"></td>
-	    <td class="b-right-column">
-	        {% if user %}
-	            Привет, {{ user.username }}
-	            <br><a href="{% url messages_inbox %}">
-	               {% if messages_inbox_count %}Новых сообщений: {{ messages_inbox_count }}
-	               {% else %}личная почта
-	               {% endif %}</a>
+		<td>
+			<div class="sidebar">
+			<!--<ul>
+				<li id="categories-2" class="widget widget_categories"><h2 class="widgettitle">Рубрики</h2>
+						<ul>
+					<li class="cat-item cat-item-7"><a href="/?cat=7" title="Разные истории и легенды города. Любой игрок может написать статью и отправить мастерам. Если Ваша легенда соответствует атмосфере мира и идее игры, то она появится на сайте. Таким образом Вы сможете заявить о своем персонаже, рассказать о каких либо событиях.">Городские легенды</a>
+				</li>
+					<li class="cat-item cat-item-3"><a href="/?cat=3" title="Просмотреть все записи в рубрике Новости">Новости</a>
 
-	            {% if is_superuser %}
-	               <div><a href="/reports/">Отчеты</a></div>
-	            {% endif %}
+				</li>
+					<li class="cat-item cat-item-6"><a href="/?cat=6" title="Различные статьи касающиеся проекта">Статьи</a>
+				</li>
+						</ul>
+				</li>
 
-                <br><a href="{% url logout %}">Выйти</a>
+				</ul>
+			-->
 
-	        	<br /><br />
-	        {% else %}
-	            <a href="{% url login %}" title="Войти"><img class="img_link" src="{% MEDIA_URL %}i/login.jpg" alt="Титаник 2012" /></a>
-	        {% endif %}
+			{% if user %}
+				Привет, {{ user.username }}
+				<br><a href="{% url messages_inbox %}">
+				   {% if messages_inbox_count %}Новых сообщений: {{ messages_inbox_count }}
+				   {% else %}личная почта
+				   {% endif %}</a>
 
-			<a href="/links/" title="Ссылки"><img class="img_link" src="{% MEDIA_URL %}i/links.jpg" alt="Титаник 2012" /></a>
-			<a href="/news" title="Новости"><img class="img_link" src="{% MEDIA_URL %}i/news.jpg" alt="Титаник 2012" /></a>
-			{% last_news %}
-	        <a href="/forum/" title="Форум"><img src="{% MEDIA_URL %}i/forum.jpg" alt="Титаник 2012" /></a><br /><br />
-	    </td>
+				{% if is_superuser %}
+				   <div><a href="/reports/">Отчеты</a></div>
+				{% endif %}
+
+				<br><a href="{% url logout %}">Выйти</a>
+				<br /><br />
+			{% else %}
+				<a href="{% url login %}" title="Войти">Войти на сайт</a>
+			{% endif %}
+			</div>
+
+		</td>
+
+		<td>
+			<div id="content">
+				{% block content %}
+				{% endblock %}
+			</div>
+		</td>
+
 	</tr>
-	</table>
-	</div>
-{% endblock page %}
+</table>
+</div>
+
+
+
+<!-- start: footer -->
+
+<div id="footer">
+
+<span class="footercredits">Copyright &#169; 2011 <a href="http://sincity2012.ru">Sin City 2012</a></span>
+
+</div>
+<!-- end: footer -->
+
+
+</div>
+
+<!-- end: wrapper -->
+
 
 {% if not is_devel %}
-<!-- Yandex.Metrika counter -->
-<div style="display:none;"><script type="text/javascript">
-(function(w, c) {
-    (w[c] = w[c] || []).push(function() {
-        try {
-            w.yaCounter6063916 = new Ya.Metrika(6063916);
-             yaCounter6063916.clickmap(true);
-             yaCounter6063916.trackLinks(true);
-
-        } catch(e) { }
-    });
-})(window, 'yandex_metrika_callbacks');
-</script></div>
-<script src="//mc.yandex.ru/metrika/watch.js" type="text/javascript" defer="defer"></script>
-<noscript><div><img src="//mc.yandex.ru/watch/6063916" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-<!-- /Yandex.Metrika counter -->
+	<!-- Yandex.Metrika counter -->
+	<!-- /Yandex.Metrika counter -->
 {% endif %}
 </body>
 </html>

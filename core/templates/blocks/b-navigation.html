@@ -1,0 +1,21 @@
+<div id="toppagemenu">
+	<ul id="nav">
+
+		{% for article in articles %}
+			<li class="page_item page-item-{{ article.id }}">
+				<a href="{% url article article.id %}" title="{{ article.title }}">{{ article.title }}</a>
+
+			{% if article.subarticles %}
+				<ul class='children'>
+					{% for subarticle in article.subarticles %}
+						<li class="page_item page-item-{{ subarticle.id }}"><a href="{% url article subarticle.id %}" title="{{ subarticle.title }}">{{ subarticle.title }}</a></li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+			</li>
+		{% endfor %}
+
+		<li class="page_item page-item-nav">
+				<a href="{% url roles %}" title="Роли">Список ролей</a>
+	</ul>
+</div>

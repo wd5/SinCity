@@ -9,7 +9,7 @@ ADMINS = (
 )
 
 MANAGERS = (
-    ('Senny', 'linashyti@gmail.com'),
+    ('Senny', 'senni@mail.ru'),
 )
 
 SERVER_EMAIL = 'robot@sincity2012.ru'

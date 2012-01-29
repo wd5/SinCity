@@ -8,9 +8,9 @@ class ProfileAdmin(admin.ModelAdmin):
    def lookup_allowed(self, *args, **kwargs):
        return True
 
+
 class RoleAdmin(admin.ModelAdmin):
-   list_display = ('name', 'ticket_level', 'cabin', 'profession', 'age', 'country', 'profile')
-   list_filter = ('ticket_level',)
+   list_display = ('section', 'name', 'profession', 'profile')
    raw_id_fields = ('profile',)
 
 
@@ -22,29 +22,17 @@ class LayerConnectionAdmin(admin.ModelAdmin):
    list_display = ('layer', 'role', 'is_locked')
 
 
-class PhotoInline(admin.TabularInline):
-    model = Photo
-    extra = 5
-
-
-class GalleryAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    inlines = (PhotoInline,)
-
-
 class NewsAdmin(admin.ModelAdmin):
-    list_display = ('date_created', 'content')
+    list_display = ('date_created', 'title', 'content')
 
 
-class DanceAdmin(admin.ModelAdmin):
+class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'order')
-
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Role, RoleAdmin)
 admin.site.register(RoleConnection, RoleConnectionAdmin)
 admin.site.register(Layer)
 admin.site.register(LayerConnection, LayerConnectionAdmin)
-admin.site.register(Gallery, GalleryAdmin)
 admin.site.register(News, NewsAdmin)
-admin.site.register(Dance, DanceAdmin)
+admin.site.register(Article, ArticleAdmin)

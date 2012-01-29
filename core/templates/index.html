@@ -2,9 +2,7 @@
 {% load russian %}
 
 {% block content %}
-    <h1>Все новости</h1>
-
-	{% for announce in object_list %}
+	{% for announce in news %}
 		<div class="post" id="post-{{ announce.id }}">
 			<h2>{{ announce.title }}</h2>
 				{{ announce.date_created|human_date }}
@@ -14,4 +12,5 @@
 			 </div>
 		</div>
 	{% endfor %}
+	<p><a href="{% url news %}">остальные новости &gt;&gt;</a></p>
 {% endblock %}

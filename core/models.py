@@ -76,9 +76,17 @@ class GenericManager( models.Manager ):
     def get_query_set(self):
         return super( GenericManager, self ).get_query_set().filter( **self.selectors )
 
-TICKET_COST = {1:0, 2:16000, 3:0, 4:600, 5:120}
+SECTIONS = (('policy', u"Полиция"),
+            ('med', u'Медицина'),
+            ('politics', u'Политика и экономика'),
+            ('religion', u'Религия'),
+            ('jounalist', u'Журналистика'),
+            ('porn', u'Бордель и иже с ними'),
+            ('other', u'Остальные граждане города'),
+)
 
 class Role(models.Model):
+    section = models.CharField(max_length=20, verbose_name=u"Раздел", choices=SECTIONS, default='other')
     name = models.CharField(max_length=200, verbose_name=u"ФИО")
     profession = models.CharField(max_length=200, verbose_name=u"Профессия")
     description = models.TextField(verbose_name=u"Описание", null=True, blank=True)
@@ -278,8 +286,11 @@ class Gallery(models.Model):
 
 
 class News(models.Model):
-    date_created = models.DateTimeField(verbose_name=u"Дата публикации", null=True, blank=True, default=None)
+    date_created = models.DateField(verbose_name=u"Дата публикации", null=True, blank=True, default=None)
+    title = models.CharField(verbose_name=u"Заголовок", max_length=50)
     content = models.TextField(verbose_name=u"Содержание")
+
+    def __unicode__(self): return self.title
 
     def save(self, *args, **kwargs):
         if not self.date_created:
@@ -291,3 +302,17 @@ class News(models.Model):
         verbose_name = u"Новость"
         verbose_name_plural = u"Новости"
         ordering = ('-date_created',)
+
+
+class Article(models.Model):
+    parent = models.ForeignKey('self', null=True, blank=True, default=None)
+    title = models.CharField(verbose_name=u"Заголовок", max_length=50)
+    content = models.TextField(verbose_name=u"Содержание")
+    order = models.PositiveSmallIntegerField(verbose_name=u"Порядок", default=100)
+
+    def __unicode__(self): return self.title
+
+    class Meta:
+        verbose_name = u"Страница"
+        verbose_name_plural = u"Страницы"
+        ordering = ('order',)

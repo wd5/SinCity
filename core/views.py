@@ -11,6 +11,7 @@ from django.contrib.flatpages.models import FlatPage
 from django.contrib.flatpages.views import flatpage
 
 from forms import *
+from models import *
 
 def render_to_response(request, template_name, context_dict=None):
     from django.shortcuts import render_to_response as _render_to_response
@@ -19,25 +20,13 @@ def render_to_response(request, template_name, context_dict=None):
 
 
 def index(request):
-    return flatpage(request, '/index/')
+    last_news = News.objects.all()[:5]
+    return render_to_response(request, 'index.html', {'news': last_news})
 
 
 def roles(request):
-    levels = (t for t in Role.TICKET_LEVEL if t[0] in (1, 2, 4, 5))
-    current_level = int(request.GET.get('level', 1))
-    roles = list(Role.objects.filter(ticket_level__in=current_level == 2 and [2, 3] or [current_level]).order_by('cabin', 'order'))
-
-    if current_level == 2:
-        prev_cabin = None
-        for role in roles:
-            if prev_cabin and prev_cabin != role.cabin:
-                role.first = True
-            prev_cabin = role.cabin
-
-    return render_to_response(request, 'roles.html', {'levels':levels,
-                                                      'roles':roles,
-                                                      'current_level': current_level,
-                                                      })
+    roles = list(Role.objects.all().order_by('order'))
+    return render_to_response(request, 'roles.html', {'roles':roles,})
 
 
 def get_current_user(func):
@@ -163,10 +152,6 @@ def messages_compose(request):
     return compose(request, recipient=recipient)
 
 
-def gallery(request, gallery_id):
-    return render_to_response(request, 'gallery.html', {'gallery': get_object_or_404(Gallery, pk=gallery_id),
-                                                        'photos': Photo.objects.filter(gallery=gallery_id),
-                                                        })
 def bus(request):
     if request.user.is_authenticated() and request.GET:
         profile = request.user.get_profile()
