@@ -116,43 +116,10 @@ INSTALLED_APPS = (
 # Настройки сайта
 #
 
-
-if platform.node() == 'u13550':
-    # production
-    sys.path.append('/home/www/projects/applications')
-
-    DEBUG = False
-    TEMPLATE_DEBUG = False
-
-    DATABASE_NAME = 'sincity'             # Or path to database file if using sqlite3.
-    DATABASE_USER = 'sincity'             # Not used with sqlite3.
-    DATABASE_PASSWORD = ''         # Not used with sqlite3.
-
-    DOMAIN = 'sincity2012.ru'
-
-    # Логи
-    LOG_PATH = '/var/log/projects/sincity'
-
-
-else:
-    # development
-    DEBUG = True
-    TEMPLATE_DEBUG = DEBUG
-    IS_DEVEL = True
-    TIMING = False
-
-    DOMAIN = 'localhost:8000'
-
-    DATABASE_NAME = 'sincity'             # Or path to database file if using sqlite3.
-    DATABASE_USER = 'root'             # Not used with sqlite3.
-    DATABASE_PASSWORD = ''         # Not used with sqlite3.
-
-    LOG_PATH = 'log'
-
-    INTERNAL_IPS = '127.0.0.1'
-
-    MEDIA_URL = 'http://sincity.localhost:8088/media/'
-
+try:
+    from local_settings import *
+except ImportError:
+    pass
 
 EXCEPTION_LOG_FILE = os.path.join(LOG_PATH, 'exception.log')
 TRACEBACK_LOG_FILE = os.path.join(LOG_PATH, 'traceback.log')
