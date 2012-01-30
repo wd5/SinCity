@@ -91,8 +91,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
-    'core.middleware.Process404Middleware',
-    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
 ROOT_URLCONF = 'urls'
@@ -108,8 +106,6 @@ INSTALLED_APPS = (
     'core',
     'newspaper',
     'messages',
-    'django.contrib.sites',
-    'django.contrib.flatpages',
 )
 
 #
