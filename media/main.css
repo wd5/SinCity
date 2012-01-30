@@ -462,3 +462,41 @@ border-bottom: 1px solid #888;
 .comments-template img{
 border: 1px solid #000;
 }
+
+
+.form_menu
+{
+    border-bottom: 1px solid gray;
+    padding-bottom: 5px;
+    margin: 10px 0;
+}
+
+.form_menu ul li
+{
+    display: inline;
+    margin: 5px 25px 5px 5px;
+    border: 1px solid gray;
+    padding:  8px 10px 5px 10px;
+    font-size: 120%;
+
+    color: black;
+    background-color: #dcdcdc;
+
+    cursor: pointer;
+}
+
+.form_menu ul:first-child
+{
+    margin-left: 50px;
+}
+
+.form_menu_active
+{
+    background-color: #ededed !important;
+    border-bottom: 1px solid #ededed !important;
+}
+
+.g-hidden
+{
+    display: none;
+}

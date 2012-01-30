@@ -27,66 +27,28 @@
     </form>
 
     <script>
-      function get_money_total(){
-          if($('#money_total_txt').text()){
-              return $('#money_total_txt').text();
-          }else{
-              return $('#total input').attr('value');
-          }
-      }
-
-      function recalc(o){
-        $('#check').text( parseInt(get_money_total()) -
-                          parseInt($('#ticket_cost_txt').text()) -
-                          parseInt($('#cafe input').attr('value')) -
-                          parseInt($('#casino input').attr('value')) -
-                          parseInt($('#wsl input').attr('value'))*3 -
-                          parseInt($('#gl input').attr('value'))*5 -
-                          parseInt($('#cache input').attr('value'))
-                          );
-        $('#wsl_money').text( parseInt($('#wsl input').attr('value'))*3 );
-        $('#gl_money').text( parseInt($('#gl input').attr('value'))*5 );
-      };
-
       function update_role_fields(){
-            role_id = $("#id_role").attr('value');
+            var role_id = $("#id_role").attr('value');
             if( role_id == '0'){
-                $("#id_role_ticket").removeAttr('disabled').attr('value','' );
                 $("#id_role_name").removeAttr('disabled').attr('value', '');
-                $("#id_role_age").removeAttr('disabled').attr('value', '');
                 $("#id_role_profession").removeAttr('disabled').attr('value', '');
-                $('#ticket_cost_txt').text('0');
                 $('.special_role').show();
             }else{
-                $("#id_role_ticket").attr('disabled', 'disabled').attr('value', roles[role_id][0]);
                 $("#id_role_name").attr('disabled', 'disabled').attr('value', roles[role_id][1]);
-                $("#id_role_age").attr('disabled', 'disabled').attr('value', roles[role_id][2]);
                 $("#id_role_profession").attr('disabled', 'disabled').attr('value', roles[role_id][3]);
                 $('.special_role').hide();
-
-                $('#ticket_cost_txt').text(tickets[roles[role_id][0]]);
             }
             recalc();
       }
 
       roles = { {% for role in profile_form.roles %}
-               '{{ role.pk }}': ['{{ role.ticket_level }}', '{{ role.name }}', '{{ role.age }}', '{{ role.profession }}']{% if not forloop.last %}, {% endif %}
+               '{{ role.pk }}': ['{{ role.name }}', '{{ role.profession }}']{% if not forloop.last %}, {% endif %}
                {% endfor %}
       };
 
-      tickets = {'1':0, '2': 16000, '3':0, '4':600, '5':120}
-
       $(function(){
-        $(".money").change(recalc).keypress(recalc);
-
         $("#id_role").change(update_role_fields);
         update_role_fields();
-
-        $("#id_role_ticket").change(function(o){
-            $('#ticket_cost_txt').text(tickets[$("#id_role_ticket").attr('value')]);
-            recalc();
-        });
-
       });
 
 

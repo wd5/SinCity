@@ -44,31 +44,14 @@
         {% if profile_form.role %}
             <tr><td class="title">Роль</td><td><nobr>{{ profile_form.role }}  {% locker 'role' profile_form is_superuser %}</nobr></td></tr>
 
-            <tr class="special_role"><td class="title"><small>или создайте свою</small></td><td>Билет: {{ profile_form.role_ticket }}</td></tr>
-            <tr class="special_role"><td class="title">&nbsp;</td><td>Имя: {{ profile_form.role_name }}</td></tr>
-            <tr class="special_role"><td class="title">&nbsp;</td><td>Возраст: {{ profile_form.role_age }}</td></tr>
+            <tr class="special_role"><td class="title"><small>или создайте свою</small></td><td>Имя: {{ profile_form.role_name }}</td></tr>
             <tr class="special_role"><td class="title">&nbsp;</td><td>Профессия: {{ profile_form.role_profession }}</td></tr>
         {% else %}
-           <tr><td class="title">Роль</td><td>{{ profile_form.instance.role.get_ticket_level_display }},
+           <tr><td class="title">Роль</td><td>{{ profile_form.instance.role.get_section_display }},
                                               {{ profile_form.instance.role.name }},
-                                              {{ profile_form.instance.role.profession }},
-                                              {{ profile_form.instance.role.get_sex_display }},
-                                              {{ profile_form.instance.role.age }} {% locker 'role' profile_form is_superuser %}
+                                              {{ profile_form.instance.role.profession }} {% locker 'role' profile_form is_superuser %}
                                               </td></tr>
         {% endif %}
-        <tr><td>&nbsp;</td><td></td></tr>
-
-        <tr><td class="title">Деньги (<small><a href="/rules/economy/" target="_blank">правила</a></small>)</td>
-            <td class="money" id="total">{% if profile_form.money_total %}{{ profile_form.money_total }}{% else %}<span id="money_total_txt">{{ profile_form.instance.money_total }}</span>{% endif %} шилл., из них:
-               {% locker 'money_total' profile_form is_superuser %}
-        </td></tr>
-        <tr><td class="title">Билет</td><td class="money" id="ticket">&nbsp;&nbsp;<span id="ticket_cost_txt">{% if profile_form.instance.role %}{{ profile_form.instance.ticket_cost }}{% else %}0{% endif %}</span> шилл.</td></tr>
-        <tr><td class="title">На счету в кафейне</td><td class="money" id="cafe">&nbsp;&nbsp;{{ profile_form.money_cafe }} шилл.</td></tr>
-        <tr><td class="title">На счету в казино</td><td class="money" id="casino">&nbsp;&nbsp;{{ profile_form.money_casino }} шилл.</td></tr>
-        <tr><td class="title">Кол-во акций WSL</td><td class="money" id="wsl">&nbsp;&nbsp;{{ profile_form.wsl_actions }} (<span id="wsl_money">0</span> шилл.)</td></tr>
-        <tr><td class="title">Кол-во акций GL</td><td class="money" id="gl">&nbsp;&nbsp;{{ profile_form.gl_actions }} (<span id="gl_money">0</span> шилл.)</td></tr>
-        <tr><td class="title">Наличные</td><td class="money" id="cache">&nbsp;&nbsp;{{ profile_form.money_cache }} шилл.</td></tr>
-        <tr><td class="title">На чековой книжке</td><td>&nbsp;&nbsp;<span id="check">{{ profile_form.instance.money_check }}</span> шилл.</td></tr>
         <tr><td>&nbsp;</td><td></td></tr>
 
         <tr><td class="title">Оружие (<small><a href="/rules/agression/" target="_blank">правила</a></small>)</td>
@@ -78,22 +61,7 @@
                         {{ profile_form.instance.gun }}
                     {% endif %}
                     {% locker 'gun' profile_form is_superuser %}</td></tr>
-        <tr><td class="title">Цель плавания в Америку</td>
-            <td>    {% if profile_form.goal %}
-                        {{ profile_form.goal }}
-                    {%  else %}
-                        {{ profile_form.instance.goal }}
-                    {% endif %}
-                    {% locker 'goal' profile_form is_superuser %}</td></tr>
-        <tr><td class="title">Мечта<br><small>если отличается от цели</small></td><td>{{ profile_form.dream }}</td></tr>
         <tr><td class="title">Фото<br></td><td>{{ profile_form.photo }}</td></tr>
-        <tr><td class="title">Способности<br></td><td>
-            {% if admin %}
-                {{ profile_form.special }}
-            {% else %}
-                {{ profile_form.instance.special|default:"-" }}
-            {% endif %}
-        </td></tr>
         {% if admin %}
             <tr><td class="title">Уплочено<br></td><td>{{ profile_form.paid }}</td></tr>
         {% endif %}
