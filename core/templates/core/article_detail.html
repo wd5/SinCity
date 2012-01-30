@@ -3,6 +3,12 @@
 
 {% block content %}
     <h1>{{ object.title }}</h1>
+    
+    <ul>
+        {% for article in object.article_set.all %}
+            <li><a href="{% url article article.id %}">{{ article.title }}</a></li>
+        {% endfor %}
+    </ul>
 
 	<p>{{ object.content|safe|linebreaks }}</p>
 {% endblock %}
