@@ -65,11 +65,26 @@ def request_form(request, current_user):
             context['reg_form'] = RegistrationForm(request.POST)
 
             if context['reg_form'].is_valid():
-                request.user = context['reg_form'].save()
-                auth.login(request, request.user)
+                # Вдруг он уже зареган
+                login_form = LoginForm(request.POST)
+                if login_form.is_valid():
+                    request.user = login_form.user
+                    profile = request.user.get_profile()
+                    auth.login(request, request.user)
+                    del context['reg_form']
+                    current_user = request.user
 
-                del context['reg_form']
-                profile = Profile.objects.create(user=request.user)
+                else:
+                    try:
+                        login_form.get_user(request.POST.get('login'))
+                        context['message'] = u"Вы ввели неправильный пароль к своей учетной записи."
+                    except User.DoesNotExist:
+                        # Заводим нового пользователя
+                        request.user = context['reg_form'].save()
+                        profile = Profile.objects.create(user=request.user)
+                        auth.login(request, request.user)
+                        del context['reg_form']
+                        current_user = request.user
 
         if profile:
             context['profile_form'] = ProfileForm(request.POST, request.FILES, instance=profile)

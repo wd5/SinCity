@@ -5,6 +5,9 @@
     <h1>Форма заявки</h1>
     {% if reg_form %}
         <div>Если вы уже регистрировались на этом сайте, войдите <a href="{% url login %}">здесь</a>.</div><br>
+        {% if message %}
+            <div>{{ message }}</div><br>
+        {% endif %}
     {% endif %}
 
     <form action="" method="POST" enctype="multipart/form-data">
