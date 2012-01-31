@@ -76,14 +76,6 @@ class GenericManager( models.Manager ):
     def get_query_set(self):
         return super( GenericManager, self ).get_query_set().filter( **self.selectors )
 
-SECTIONS = (('policy', u"Полиция"),
-            ('med', u'Медицина'),
-            ('politics', u'Политика и экономика'),
-            ('religion', u'Религия'),
-            ('jounalist', u'Журналистика'),
-            ('porn', u'Бордель'),
-            ('other', u''),
-)
 
 class RoleSection(models.Model):
     title = models.CharField(max_length=200, verbose_name=u"Название")
