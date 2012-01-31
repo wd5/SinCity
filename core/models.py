@@ -81,8 +81,8 @@ SECTIONS = (('policy', u"Полиция"),
             ('politics', u'Политика и экономика'),
             ('religion', u'Религия'),
             ('jounalist', u'Журналистика'),
-            ('porn', u'Бордель и иже с ними'),
-            ('other', u'Остальные граждане города'),
+            ('porn', u'Бордель'),
+            ('other', u''),
 )
 
 class Role(models.Model):
