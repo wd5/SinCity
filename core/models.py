@@ -85,8 +85,20 @@ SECTIONS = (('policy', u"Полиция"),
             ('other', u''),
 )
 
+class RoleSection(models.Model):
+    title = models.CharField(max_length=200, verbose_name=u"Название")
+    order = models.IntegerField(verbose_name=u"Порядок", default=100)
+
+    def __unicode__(self): return self.title
+
+    class Meta:
+        verbose_name = u"Раздел ролей"
+        verbose_name_plural = u"Разделы ролей"
+        ordering = ('order',)
+
+
 class Role(models.Model):
-    section = models.CharField(max_length=20, verbose_name=u"Раздел", choices=SECTIONS, default='other')
+    rolesection = models.ForeignKey(RoleSection, verbose_name=u"Раздел")
     name = models.CharField(max_length=200, verbose_name=u"ФИО")
     profession = models.CharField(max_length=200, verbose_name=u"Профессия")
     description = models.TextField(verbose_name=u"Описание", null=True, blank=True)

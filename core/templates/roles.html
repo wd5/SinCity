@@ -34,7 +34,7 @@
         </tr>
         {% for role in roles %}
             <tr class="{% cycle 'odd' 'even' %}{% if role.first %} role_separator{% endif %}">
-				<td>{{ role.get_section_display }}</td>
+				<td>{{ role.rolesection.title }}</td>
                 <td><div title="{{ role.description }}">{{ role.name }}</div></td>
                 <td>{{ role.profession }}</td>
                 <td>{% if role.profile %}

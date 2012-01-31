@@ -8,9 +8,11 @@ class ProfileAdmin(admin.ModelAdmin):
    def lookup_allowed(self, *args, **kwargs):
        return True
 
+class RoleSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'order')
 
 class RoleAdmin(admin.ModelAdmin):
-   list_display = ('name', 'section', 'profession', 'profile')
+   list_display = ('name', 'rolesection', 'profession', 'profile')
    raw_id_fields = ('profile',)
 
 
@@ -30,6 +32,7 @@ class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'order')
 
 admin.site.register(Profile, ProfileAdmin)
+admin.site.register(RoleSection, RoleSectionAdmin)
 admin.site.register(Role, RoleAdmin)
 admin.site.register(RoleConnection, RoleConnectionAdmin)
 admin.site.register(Layer)

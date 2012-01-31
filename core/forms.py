@@ -80,7 +80,7 @@ class ProfileForm(ModelForm):
         super(ProfileForm, self).__init__(*args, **kwargs)
         #print "START", ",".join(self.fields.keys())
 
-        self.roles = list(Role.objects.filter(profile__isnull=True).order_by('section', 'order'))
+        self.roles = list(Role.objects.filter(profile__isnull=True).order_by('rolesection__order', 'order'))
 
         if 'instance' in kwargs:
             if kwargs['instance'].role_id:
