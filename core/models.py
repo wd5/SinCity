@@ -117,7 +117,7 @@ class Profile(models.Model):
     gun = models.CharField(max_length=200, verbose_name=u"Оружие", null=True, blank=True)
     goal = models.TextField(verbose_name=u"Цель")
     dream = models.TextField(verbose_name=u"Мечта", null=True, blank=True)
-    photo = ThumbnailImageField(upload_to='data', null=True, blank=True)
+    photo = ThumbnailImageField(upload_to=lambda instance, filename:"data/%s.jpg" % instance.id, null=True, blank=True)
 
     role = models.ForeignKey(Role, verbose_name=u"Роль", null=True, blank=True, related_name="suggested_role")
     quest = models.TextField(verbose_name=u'Квента', null=True, blank=True, default=None)
