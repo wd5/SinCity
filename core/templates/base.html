@@ -8,7 +8,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
 
-    <link rel="stylesheet" href="{% MEDIA_URL %}main.css?1"/>
+    <link rel="stylesheet" href="{% MEDIA_URL %}main.css?2"/>
 
     <script type="text/javascript" src="http://yandex.st/jquery/1.6.2/jquery.min.js" charset="utf-8"></script>
 	<script src="{% MEDIA_URL %}js/dropdown.js" type="text/javascript"></script>
@@ -37,22 +37,6 @@
 	<tr>
 		<td>
 			<div class="sidebar">
-			<!--<ul>
-				<li id="categories-2" class="widget widget_categories"><h2 class="widgettitle">Рубрики</h2>
-						<ul>
-					<li class="cat-item cat-item-7"><a href="/?cat=7" title="Разные истории и легенды города. Любой игрок может написать статью и отправить мастерам. Если Ваша легенда соответствует атмосфере мира и идее игры, то она появится на сайте. Таким образом Вы сможете заявить о своем персонаже, рассказать о каких либо событиях.">Городские легенды</a>
-				</li>
-					<li class="cat-item cat-item-3"><a href="/?cat=3" title="Просмотреть все записи в рубрике Новости">Новости</a>
-
-				</li>
-					<li class="cat-item cat-item-6"><a href="/?cat=6" title="Различные статьи касающиеся проекта">Статьи</a>
-				</li>
-						</ul>
-				</li>
-
-				</ul>
-			-->
-
 			{% if user %}
 				Привет, {{ user.username }}
 				<br><a href="{% url messages_inbox %}">
@@ -74,7 +58,7 @@
 
 		</td>
 
-		<td>
+		<td class="content_zone">
 			<div id="content">
 				{% block content %}
 				{% endblock %}
