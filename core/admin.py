@@ -10,7 +10,7 @@ class ProfileAdmin(admin.ModelAdmin):
 
 
 class RoleAdmin(admin.ModelAdmin):
-   list_display = ('section', 'name', 'profession', 'profile')
+   list_display = ('name', 'section', 'profession', 'profile')
    raw_id_fields = ('profile',)
 
 
