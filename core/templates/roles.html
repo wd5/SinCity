@@ -30,7 +30,7 @@
 			<th>Раздел</th>
             <th>Имя персонажа</th>
             <th>Профессия</th>
-            <th>{% if is_superuser %}Игрок{% else %}Занято{% endif %}</th>
+            <th>Игрок</th>
         </tr>
         {% for role in roles %}
             <tr class="{% cycle 'odd' 'even' %}{% if role.first %} role_separator{% endif %}">
@@ -42,7 +42,7 @@
                             {{ role.profile.name }} ({{ role.profile.user.username }})&nbsp;<a href="{% url messages_compose %}?recipient={{ role.profile.user.username }}" title="Личное сообщение"
                                 ><img class="img_link" src="{% MEDIA_URL %}i/email.png"></a>
                         {% else %}
-                            да
+                            <img class="img_link" src="{% MEDIA_URL %}i/email.png" title="Зарегистрируйтесь, чтобы отправлять сообщения">
                         {% endif %}
                     {% else %}
                         &nbsp;
