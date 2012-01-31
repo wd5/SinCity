@@ -25,7 +25,7 @@ def index(request):
 
 
 def roles(request):
-    roles = list(Role.objects.all().order_by('order'))
+    roles = list(Role.objects.all().order_by('rolesection__order', 'order'))
     return render_to_response(request, 'roles.html', {'roles':roles,})
 
 
