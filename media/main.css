@@ -219,15 +219,29 @@ font-size: 11px;
 
 
 /* start: anchor/link codes */
+.b-header{
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    border-collapse: collapse;
+    border: 0
+}
+
+.b-header_center{
+    text-align: center;
+    width: 100%;
+    font-family: Georgia, Sans-serif;
+    font-size: 24px;
+    padding: 0 0 10px 0;
+}
 
 
-
-#header a{
+.b-header_center a{
 text-decoration: none;
 color: #b0b0b0;
 }
 
-#header a:hover{
+.b-header_center a:hover{
 color: #fff;
 }
 
