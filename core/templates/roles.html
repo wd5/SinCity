@@ -30,15 +30,23 @@
 			<th>Раздел</th>
             <th>Имя персонажа</th>
             <th>Профессия</th>
-            <th>Занято</th>
+            <th>{% if is_superuser %}Игрок{% else %}Занято{% endif %}</th>
         </tr>
         {% for role in roles %}
             <tr class="{% cycle 'odd' 'even' %}{% if role.first %} role_separator{% endif %}">
 				<td>{{ role.get_section_display }}</td>
                 <td><div title="{{ role.description }}">{{ role.name }}</div></td>
                 <td>{{ role.profession }}</td>
-                <td>{% if role.profile %}{{ role.profile.user.username }}{% else %}&nbsp;{% endif %}</td>
-                <td>{% if role.profile %}да{% else %}&nbsp;{% endif %}</td>
+                <td>{% if role.profile %}
+                        {% if is_superuser %}
+                            {{ role.profile.name }} ({{ role.profile.user.username }})&nbsp;<a href="{% url messages_compose %}?recipient={{ role.profile.user.username }}" title="Личное сообщение"
+                                ><img class="img_link" src="{% MEDIA_URL %}i/email.png"></a>
+                        {% else %}
+                            да
+                        {% endif %}
+                    {% else %}
+                        &nbsp;
+                    {% endif %}</td>
             </tr>
         {% endfor %}
     </table>
