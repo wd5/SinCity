@@ -86,7 +86,7 @@ class ProfileForm(ModelForm):
             if kwargs['instance'].role_id:
                 self.roles.insert(0, kwargs['instance'].role)
 
-            self.initial['role'] = kwargs['instance'].role_id or 1
+            self.initial['role'] = kwargs['instance'].role_id or Role.objects.all()[0].id
             role = Role.objects.get(pk=self.initial['role'])
             self.initial['role_name'] = role.name
             self.initial['role_profession'] = role.profession
