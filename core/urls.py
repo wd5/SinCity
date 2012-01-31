@@ -16,8 +16,6 @@ urlpatterns = patterns('',
     url(r'^bus', bus, name='bus'),
 
     url(r'^reports/$', reports),
-    url(r'^reports/actions/$', report_actions),
-    url(r'^reports/money/$', report_money),
     url(r'^reports/contacts/$', report_contacts),
     url(r'^reports/paid/$', report_paid),
     url(r'^reports/layers/$', report_layers),
