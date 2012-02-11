@@ -231,7 +231,15 @@ class RoleConnection(models.Model):
                                 emails,
                                 )
             else:
-                mail_managers(u"SinCity 2012: новая связь между ролями", "Анкета: http://sincity2012.ru/form?change_user=%s\n\n%s -> %s" % (self.role.profile.user.pk, self.role, self.role_rel))
+                if self.role.profile:
+                    profile = self.role.profile
+                else:
+                    profile = Profile.objects.filter(role=self.role)[0]
+
+                mail_managers(u"SinCity 2012: новая связь между ролями",
+                    "Анкета: http://sincity2012.ru/form?change_user=%s\n\n%s -> %s"
+                    % (profile.user.pk, self.role, self.role_rel)
+                )
 
         return super(RoleConnection, self).save(*args, **kwargs)
 
