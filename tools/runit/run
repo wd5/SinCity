@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo $(date) restarted >> /var/log/projects/sincity/restart.log
+exec chpst -u www home/www/projects/sincity/ENV/bin/python /home/www/projects/sincity/src/manage.py runfcgi errlog=/var/log/projects/sincity/fcgi-error.log method=prefork host=127.0.0.1 port=3031 pidfile=/home/www/projects/sincity/pid daemonize=false
