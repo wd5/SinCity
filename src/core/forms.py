@@ -1,11 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
-from django.contrib.contenttypes.models import ContentType
 from django.forms import *
-from django.forms.formsets import formset_factory
-from django.forms.models import modelformset_factory
 from django.db.models import Q
 
 from models import *
@@ -78,7 +74,6 @@ class ProfileForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
-        #print "START", ",".join(self.fields.keys())
 
         self.roles = list(Role.objects.filter(profile__isnull=True).order_by('rolesection__order', 'order'))
 

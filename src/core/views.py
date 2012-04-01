@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import simplejson
+from django.utils import simplejson
 
 from django.contrib import auth
 from django.contrib.auth.decorators import  permission_required

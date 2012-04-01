@@ -12,7 +12,7 @@ urlpatterns = patterns('',
     url(r'^auth/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
     url(r'^auth/reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
 
-    url(r'^admin/(.*)', admin.site.root, name="admin"),
+    url(r'^admin/', include(admin.site.urls), name="admin"),
     (r'^newspaper/', include('newspaper.urls')),
 
     url(r'^messages/compose/$', 'core.views.messages_compose', name='messages_compose'),

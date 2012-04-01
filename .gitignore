@@ -1,6 +1,7 @@
-*.pyc
-*.pyd
+ENV
 .idea
-*.bat
-log/*.*
+log
+*.pyc
+*.gz
+fab_settings.py
 local_settings.py

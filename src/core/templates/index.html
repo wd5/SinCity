@@ -1,17 +1,16 @@
 {% extends "base.html" %}
-{% load russian %}
+{% load pytils_dt %}
 
 {% block content %}
-    <h1>Все новости</h1>
-
-	{% for announce in object_list %}
+	{% for announce in news %}
 		<div class="post" id="post-{{ announce.id }}">
 			<h2>{{ announce.title }}</h2>
-				{{ announce.date_created|human_date }}
+				{{ announce.date_created|ru_strftime:"%d %B" }}
 
 		 	<div class="entry">
 				  <p>{{ announce.content|safe|linebreaks }}</p>
 			 </div>
 		</div>
 	{% endfor %}
+	<p><a href="{% url news %}">остальные новости &gt;&gt;</a></p>
 {% endblock %}

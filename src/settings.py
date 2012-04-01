@@ -14,15 +14,6 @@ MANAGERS = (
 
 SERVER_EMAIL = 'robot@sincity2012.ru'
 
-DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'ado_mssql'.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
-
-DATABASE_OPTIONS = {
-                    "init_command": "SET storage_engine=MYISAM",
-                    'charset': 'utf8',
-                    }
-
 LOGIN_URL = '/auth/login'
 LOGIN_REDIRECT_URL = '/'
 
@@ -45,6 +36,7 @@ TIME_ZONE = 'Asia/Yekaterinburg'
 LANGUAGE_CODE = 'ru-ru'
 
 SITE_ID = 1
+DOMAIN = 'sincity2012.ru'
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -64,7 +56,7 @@ MEDIA_URL = '/media/'
 ADMIN_MEDIA_PREFIX = '/admin/media/'
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = '(q3s-v$9jv#x&ow)w_+*vxeag*&tt76asdbco^(Rk#z&jb!j=*bgctzhivv#efmj'
+SECRET_KEY = '12345'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -100,17 +92,55 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
-    'django_errorlog',
-    'django_russian',
     'south',
     'core',
     'newspaper',
     'messages',
+    'pytils',
 )
 
 #
 # Настройки сайта
 #
+
+LOG_PATH = '/var/log/projects/sincity'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(asctime)s %(name)-15s %(levelname)s %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+        },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'file': {
+            'level': 'WARNING',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(LOG_PATH, 'traceback.log'),
+            'formatter': 'verbose',
+            },
+        'mail_admins': {
+            'level': 'ERROR',
+            'class': 'django.utils.log.AdminEmailHandler',
+            }
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['mail_admins', 'file'],
+            'level': 'WARNING',
+            'propagate': True,
+            },
+        }
+}
 
 try:
     from local_settings import *

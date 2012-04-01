@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from hashlib import md5
-import os
-import Image
 from datetime import datetime
 
 from django.contrib.auth.models import User
@@ -10,59 +7,7 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.mail import send_mail, mail_managers
 
-from south.modelsinspector import add_introspection_rules
-
-
-class ThumbnailImageFieldFile(models.fields.files.ImageFieldFile):
-    def get_thumbnail(self):
-        u""" Возвращает tuple (урл, (размеры))"""
-        if not self.name:
-            return "",(0, 0)
-
-        ext = self.name.split('.')[-1]
-        thumbnail_file = md5(self.name.encode('utf8')).hexdigest() + '.' + ext
-        thumbnail_dir = thumbnail_file[0:2]
-        thumbnail_path = os.path.join(settings.THUMBNAIL_ROOT, thumbnail_dir, thumbnail_file)
-        if os.path.exists(thumbnail_path):
-            try:
-                im = Image.open(thumbnail_path)
-                return "%s%s/%s" % (settings.THUMBNAIL_URL, thumbnail_dir, thumbnail_file), im.size
-            except IOError:
-                return "%s%s/%s" % (settings.THUMBNAIL_URL, thumbnail_dir, thumbnail_file), (0, 0)
-
-
-        file = os.path.join(settings.MEDIA_ROOT, self.name)
-        if not os.path.exists(file):
-            open(settings.WARNING_LOG_PATH, 'a').write("file '%s' not found\n" % self.name)
-            return "[file '%s' not found]" % self.name, (0, 0)
-
-        if not os.path.exists(os.path.join(settings.THUMBNAIL_ROOT, thumbnail_dir)):
-            os.mkdir(os.path.join(settings.THUMBNAIL_ROOT, thumbnail_dir))
-
-        try:
-            #FIXME: сделать генерацию тумбнейлов отдельным Thread
-            im = Image.open(file)
-            im.thumbnail(settings.THUMBNAIL_SIZE, Image.ANTIALIAS)
-            im.save(os.path.join(settings.THUMBNAIL_ROOT, thumbnail_dir, thumbnail_file))
-            return "%s%s/%s" % (settings.THUMBNAIL_URL, thumbnail_dir, thumbnail_file), im.size
-
-        except IOError, e:
-            return "cannot create thumbnail for %s: %s" % (self.name, e), (0, 0)
-
-    def get_thumbnail_url(self):
-        return self.get_thumbnail()[0]
-
-
-class ThumbnailImageField(models.ImageField):
-    attr_class = ThumbnailImageFieldFile
-
-rules = [(
-            (ThumbnailImageField, ),
-            [],
-            {},
-        ),]
-
-add_introspection_rules(rules, ["^core",])
+from yafotki.fields import YFField
 
 
 class GenericManager( models.Manager ):
@@ -117,7 +62,11 @@ class Profile(models.Model):
     gun = models.CharField(max_length=200, verbose_name=u"Оружие", null=True, blank=True)
     goal = models.TextField(verbose_name=u"Цель")
     dream = models.TextField(verbose_name=u"Мечта", null=True, blank=True)
-    photo = ThumbnailImageField(upload_to=lambda instance, filename:"data/%s.jpg" % instance.id, null=True, blank=True)
+    portrait = YFField(
+        verbose_name=u"Фото",
+        upload_to='sincity',
+        null=True, blank=True, default=None,
+    )
 
     role = models.ForeignKey(Role, verbose_name=u"Роль", null=True, blank=True, related_name="suggested_role")
     quest = models.TextField(verbose_name=u'Квента', null=True, blank=True, default=None)

@@ -1,8 +1,8 @@
 {% load content %}
 <div id="js-profile" class="js-tab-content">
-    {% if profile_form.instance and profile_form.instance.photo %}
+    {% if profile_form.instance and profile_form.instance.portrait %}
         <div style="position: relative">
-            <div style="position: absolute; right:0;"><a href="{{ profile_form.instance.photo.url }}" class="b-black-link"><img src="{% MEDIA_URL %}{{ profile_form.instance.photo.get_thumbnail.0 }}"></a></div>
+            <div style="position: absolute; right:0;"><a href="{{ profile_form.instance.portrait.src }}" class="b-black-link"><img src="{{ profile_form.instance.portrait.src_150 }}"></a></div>
         </div>
     {% endif %}
 
@@ -61,7 +61,7 @@
                         {{ profile_form.instance.gun }}
                     {% endif %}
                     {% locker 'gun' profile_form is_superuser %}</td></tr>
-        <tr><td class="title">Фото<br></td><td>{{ profile_form.photo }}</td></tr>
+        <tr><td class="title">Фото<br></td><td>{{ profile_form.portrait }}</td></tr>
         {% if admin %}
             <tr><td class="title">Уплочено<br></td><td>{{ profile_form.paid }}</td></tr>
         {% endif %}

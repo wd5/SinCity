@@ -1,8 +1,8 @@
-{% load russian %}
+{% load pytils_dt %}
 
 <div class="b-news">
 	{% for announce in news %}
-		<div class="b-news_date">{{ announce.date_created|human_date }}</div>
+		<div class="b-news_date">{{ announce.date_created|ru_strftime:"%d %B" }}</div>
 		<div class="b-news_content">{{ announce.content|safe }}</div>
 	{% endfor %}
 
