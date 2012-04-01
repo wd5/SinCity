@@ -13,9 +13,7 @@ class Migration(SchemaMigration):
 
     def backwards(self, orm):
         # Adding field 'Profile.photo'
-        db.add_column('core_profile', 'photo',
-                      self.gf('core.models.ThumbnailImageField')(max_length=100, null=True, blank=True),
-                      keep_default=False)
+        pass
 
     models = {
         'auth.group': {
