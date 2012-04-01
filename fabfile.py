@@ -80,7 +80,7 @@ def upload():
 def environment():
     with cd(env.directory):
         with settings(warn_only=True):
-            run('python virtualenv.py ENV')
+            run('python virtualenv.py ENV  --system-site-packages')
         virtualenv('pip install -r requirements.txt')
 
 
