@@ -38,9 +38,11 @@
                 <td><div title="{{ role.description }}">{{ role.name }}</div></td>
                 <td>{{ role.profession }}</td>
                 <td>{% if role.profile %}
-                        {% if is_superuser %}
-                            {{ role.profile.name }} ({{ role.profile.user.username }})&nbsp;
-                             <a href="{% url messages_compose %}?recipient={{ role.profile.user.username }}" title="Личное сообщение"
+                        {% if user %}
+                            {% if is_superuser %}
+                                {{ role.profile.name }} ({{ role.profile.user.username }})&nbsp;
+                            {% endif %}
+                             <a href="{% url messages_compose %}?recipient={{ role.id }}" title="Личное сообщение"
                                 ><img class="img_link" src="{% MEDIA_URL %}i/email.png"></a>
                         {% else %}
                             <img class="img_link" src="{% MEDIA_URL %}i/email.png" title="Зарегистрируйтесь, чтобы отправлять сообщения">

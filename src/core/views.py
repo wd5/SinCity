@@ -163,7 +163,8 @@ def messages_compose(request):
     from messages.views import compose
     recipient = None
     if request.method == 'GET' and request.GET.get('recipient'):
-        recipient = request.GET.get('recipient')
+        role = Role.objects.get(pk=request.GET.get('recipient'))
+        recipient = role.profile.user.username
     return compose(request, recipient=recipient)
 
 

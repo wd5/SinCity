@@ -1,12 +1,14 @@
-{% extends "messages/base.html" %} 
-{% load i18n %} 
+{% extends "messages/base.html" %}
+{% load i18n %}
 
 {% block page_title %}{% trans "Compose Message" %}{% endblock %}
 
-{% block messages_content %} 
+{% block messages_content %}
 	<form action="" method="post">
 		<table class="new_message">
-			{{ form.as_table }}
+            <tr><th>Получатель</th><td>{{ form.fields.recipient.initial.0.get_profile.role }}</td></tr>
+            <tr><th>Тема</th><td>{{ form.subject }}</td></tr>
+            <tr><th>Сообщение</th><td>{{ form.body }}</td></tr>
 		</table>
 		<input type="submit" value="{% trans "Send" %} &raquo;"/>
 	</form>
