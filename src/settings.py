@@ -4,15 +4,9 @@ import os, platform, sys
 
 APPEND_SLASH = False
 
-ADMINS = (
-    ('Glader', 'glader@glader.ru'),
-)
-
-MANAGERS = (
-    ('Senny', 'senni@mail.ru'),
-)
-
-SERVER_EMAIL = 'robot@sincity2012.ru'
+ADMINS = (('Glader', 'glader.ru@gmail.com'),)
+MANAGERS = ADMINS + ('Senny', 'senni@mail.ru')
+SERVER_EMAIL = DEFAULT_FROM_EMAIL = 'glader.ru@gmail.com'
 
 LOGIN_URL = '/auth/login'
 LOGIN_REDIRECT_URL = '/'
