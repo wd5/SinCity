@@ -129,7 +129,8 @@ class Profile(models.Model):
 
 
     def save(self, check_diff=True, *args, **kwargs):
-        if self.pk and check_diff and not settings.DEBUG:
+        if self.pk and check_diff:
+            print "!!!"
             prev = self.__class__.objects.get(pk=self.pk)
             report = ""
             for field in self._meta.fields:
@@ -140,6 +141,7 @@ class Profile(models.Model):
                     report += u"%s: '%s' -> '%s'\n" % (field.verbose_name, getattr(prev, field.name) or '-', getattr(self, field.name) or '-')
 
             if report:
+                print "REPORT"
                 report = u"Измененные поля профиля [http://sincity2012.ru/form?change_user=%s]:\n" % self.user.pk + report
                 emails = [settings.MANAGERS[0][1], settings.ADMINS[0][1], self.user.email]
 
@@ -163,32 +165,31 @@ class RoleConnection(models.Model):
     is_locked = models.BooleanField(verbose_name=u"Заморожено", default=False)
 
     def save(self, *args, **kwargs):
-        if not settings.DEBUG:
-            if self.pk:
-                prev = self.__class__.objects.get(pk=self.pk)
-                if getattr(self, 'comment') != getattr(prev, 'comment'):
-                    report = u"Анкета: http://sincity2012.ru/form?change_user=%s\n\nИзмененная связь: %s -> %s:\nБыло: %s\nСтало: '%s'" % \
-                             (self.role.profile.user.pk, self.role,
-                              self.role_rel, getattr(prev,'comment') or '-', getattr(self, 'comment') or '-')
-                    emails = [settings.MANAGERS[0][1], settings.ADMINS[0][1]]
-                    if self.role.profile:
-                        emails.append(self.role.profile.user.email)
-
-                    send_mail(u"SInCity 2012: изменения в связях роли %s" % self.role,
-                                report,
-                                settings.SERVER_EMAIL,
-                                emails,
-                                )
-            else:
+        if self.pk:
+            prev = self.__class__.objects.get(pk=self.pk)
+            if getattr(self, 'comment') != getattr(prev, 'comment'):
+                report = u"Анкета: http://sincity2012.ru/form?change_user=%s\n\nИзмененная связь: %s -> %s:\nБыло: %s\nСтало: '%s'" % \
+                         (self.role.profile.user.pk, self.role,
+                          self.role_rel, getattr(prev,'comment') or '-', getattr(self, 'comment') or '-')
+                emails = [settings.MANAGERS[0][1], settings.ADMINS[0][1]]
                 if self.role.profile:
-                    profile = self.role.profile
-                else:
-                    profile = Profile.objects.filter(role=self.role)[0]
+                    emails.append(self.role.profile.user.email)
 
-                mail_managers(u"SinCity 2012: новая связь между ролями",
-                    "Анкета: http://sincity2012.ru/form?change_user=%s\n\n%s -> %s"
-                    % (profile.user.pk, self.role, self.role_rel)
-                )
+                send_mail(u"SinCity 2012: изменения в связях роли %s" % self.role,
+                            report,
+                            settings.SERVER_EMAIL,
+                            emails,
+                            )
+        else:
+            if self.role.profile:
+                profile = self.role.profile
+            else:
+                profile = Profile.objects.filter(role=self.role)[0]
+
+            mail_managers(u"SinCity 2012: новая связь между ролями",
+                u"Анкета: http://sincity2012.ru/form?change_user=%s\n\n%s -> %s\n\n%s"
+                % (profile.user.pk, self.role, self.role_rel, self.comment)
+            )
 
         return super(RoleConnection, self).save(*args, **kwargs)
 
@@ -214,22 +215,21 @@ class LayerConnection(models.Model):
     is_locked = models.BooleanField(verbose_name=u"Заморожено", default=False)
 
     def save(self, *args, **kwargs):
-        if not settings.DEBUG:
-            if self.pk:
-                prev = self.__class__.objects.get(pk=self.pk)
-                if getattr(self, 'comment') != getattr(prev, 'comment'):
-                    report = u"Измененный пласт: %s -> %s:\nБыло: %s\nСтало: '%s'" % (self.role, self.layer, getattr(prev,'comment') or '-', getattr(self, 'comment') or '-')
-                    emails = [settings.MANAGERS[0][1], settings.ADMINS[0][1]]
-                    if self.role.profile:
-                        emails.append(self.role.profile.user.email)
+        if self.pk:
+            prev = self.__class__.objects.get(pk=self.pk)
+            if getattr(self, 'comment') != getattr(prev, 'comment'):
+                report = u"Измененный пласт: %s -> %s:\nБыло: %s\nСтало: '%s'" % (self.role, self.layer, getattr(prev,'comment') or '-', getattr(self, 'comment') or '-')
+                emails = [settings.MANAGERS[0][1], settings.ADMINS[0][1]]
+                if self.role.profile:
+                    emails.append(self.role.profile.user.email)
 
-                    send_mail(u"SinCity 2012: изменения в пласте роли %s" % self.role,
-                                report,
-                                settings.SERVER_EMAIL,
-                                emails,
-                                )
-            else:
-                mail_managers(u"SinCity 2012: новый пласт роли", "%s -> %s" % (self.role, self.layer))
+                send_mail(u"SinCity 2012: изменения в пласте роли %s" % self.role,
+                            report,
+                            settings.SERVER_EMAIL,
+                            emails,
+                            )
+        else:
+            mail_managers(u"SinCity 2012: новый пласт роли", u"%s -> %s\n\n%s" % (self.role, self.layer, self.comment))
 
         return super(LayerConnection, self).save(*args, **kwargs)
 

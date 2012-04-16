@@ -3,6 +3,8 @@
 import os, platform, sys
 
 APPEND_SLASH = False
+DEBUG = False
+TEMPLATE_DEBUG = False
 
 ADMINS = (('Glader', 'glader.ru@gmail.com'),)
 MANAGERS = ADMINS + ('Senny', 'senni@mail.ru')
