@@ -61,6 +61,7 @@
                         {{ profile_form.instance.gun }}
                     {% endif %}
                     {% locker 'gun' profile_form is_superuser %}</td></tr>
+        <tr><td class="title">Спец. способности</td><td>{{ profile_form.special }}</td></tr>
         <tr><td class="title">Фото<br></td><td>{{ profile_form.portrait }}</td></tr>
         {% if admin %}
             <tr><td class="title">Уплочено<br></td><td>{{ profile_form.paid }}</td></tr>

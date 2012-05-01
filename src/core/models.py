@@ -140,7 +140,6 @@ class Profile(models.Model):
                     report += u"%s: '%s' -> '%s'\n" % (field.verbose_name, getattr(prev, field.name) or '-', getattr(self, field.name) or '-')
 
             if report:
-                print "REPORT"
                 report = u"Измененные поля профиля [http://sincity2012.ru/form?change_user=%s]:\n%s" % (self.user.pk, report)
                 emails = [rec[1] for rec in settings.MANAGERS] + [self.user.email]
 
