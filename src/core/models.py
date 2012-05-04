@@ -217,13 +217,16 @@ class LayerConnection(models.Model):
     is_locked = models.BooleanField(verbose_name=u"Заморожено", default=False)
 
     def save(self, *args, **kwargs):
+        emails = [rec[1] for rec in settings.MANAGERS]
+        if self.role and self.role.profile:
+            emails.append(self.role.profile.user.email)
+        if self.layer_id == 6:
+            emails.append('linashyti@gmail.com')  # мастер по пласту "наука"
+
         if self.pk:
             prev = self.__class__.objects.get(pk=self.pk)
             if getattr(self, 'comment') != getattr(prev, 'comment'):
                 report = u"Измененный пласт: %s -> %s:\nБыло: %s\nСтало: '%s'" % (self.role, self.layer, getattr(prev,'comment') or '-', getattr(self, 'comment') or '-')
-                emails = [rec[1] for rec in settings.MANAGERS]
-                if self.role.profile:
-                    emails.append(self.role.profile.user.email)
 
                 send_mail(u"SinCity 2012: изменения в пласте роли %s" % self.role,
                             report,
@@ -231,7 +234,12 @@ class LayerConnection(models.Model):
                             emails,
                             )
         else:
-            mail_managers(u"SinCity 2012: новый пласт роли", u"%s -> %s\n\n%s" % (self.role, self.layer, self.comment))
+            send_mail(
+                u"SinCity 2012: новый пласт роли %s" % self.role,
+                u"%s -> %s\n\n%s" % (self.role, self.layer, self.comment),
+                settings.SERVER_EMAIL,
+                emails,
+            )
 
         return super(LayerConnection, self).save(*args, **kwargs)
 
