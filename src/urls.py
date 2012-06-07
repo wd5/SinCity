@@ -16,6 +16,7 @@ urlpatterns = patterns('',
     (r'^newspaper/', include('newspaper.urls')),
 
     url(r'^messages/compose/$', 'core.views.messages_compose', name='messages_compose'),
+    url(r'^messages/reply/(\d+)/$', 'core.views.reply', name='messages_compose'),
     (r'^messages/', include('messages.urls')),
     (r'^', include('core.urls')),
 )
