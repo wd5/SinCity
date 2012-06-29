@@ -3,6 +3,7 @@
 from django.contrib.auth import authenticate
 from django.forms import *
 from django.db.models import Q
+from django.conf import settings
 
 from models import *
 
@@ -148,13 +149,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.translation import ugettext_noop
 from django.contrib.auth.models import User
 
-if "notification" in settings.INSTALLED_APPS:
-    from notification import models as notification
-else:
-    notification = None
-
 from messages.models import Message
-from messages.fields import CommaSeparatedUserField
 
 class ComposeForm(forms.Form):
     """
@@ -190,11 +185,11 @@ class ComposeForm(forms.Form):
             parent_msg.save()
         msg.save()
         message_list.append(msg)
-        if notification:
-            if parent_msg is not None:
-                notification.send([sender], "messages_replied", {'message': msg,})
-                notification.send([user], "messages_reply_received", {'message': msg,})
-            else:
-                notification.send([sender], "messages_sent", {'message': msg,})
-                notification.send([user], "messages_received", {'message': msg,})
+
+        send_mail(
+            u"SinCity2012: новое сообщение в личных",
+            u"Вам было послано сообщение. Вы можете прочитать его по ссылке http://%s%s" % (settings.DOMAIN, reverse('messages_inbox')),
+            settings.DEFAULT_FROM_EMAIL,
+            [user.email],
+        )
         return message_list
