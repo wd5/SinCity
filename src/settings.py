@@ -90,6 +90,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'south',
     'core',
+    'gallery',
     'newspaper',
     'messages',
     'pytils',
