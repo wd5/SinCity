@@ -119,7 +119,7 @@ class ProfileForm(ModelForm):
                 role = Role.objects.create(name=self.cleaned_data['role_name'],
                                            profession=self.cleaned_data['role_profession'],
                                            description='',
-                                           rolesection=RoleSection.objects.all().order_by('-order')[0],
+                                           rolesection=RoleSection.objects.get(pk=7),
                                            )
 
             else:
