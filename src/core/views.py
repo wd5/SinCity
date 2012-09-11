@@ -250,7 +250,6 @@ def bus(request):
         return HttpResponseRedirect(reverse('bus'))
 
     context = {'passangers': Profile.objects.filter(bus=True),
-               'page': FlatPage.objects.get(url='/bus'),
                }
     if request.user.is_authenticated():
         context['profile'] = request.user.get_profile()
@@ -329,6 +328,42 @@ def report_food(request):
 
     return render_to_response(request, 'reports/food.html', {'table': table})
 
+
+def excel_report(func):
+    def wrapper(request):
+        context = func(request)
+        if request.GET.get('mode') == 'xls':
+            import xlwt
+            wbk = xlwt.Workbook()
+            sheet = wbk.add_sheet('sheet')
+
+            for i, header in enumerate(context['headers']):
+                sheet.write(0, i, header)
+
+            for x, row in enumerate(context['rows']):
+                for y, cell in enumerate(row):
+                    sheet.write(x + 1, y, cell)
+
+            wbk.save(settings.TMP_FILE)
+            response = HttpResponse(open(settings.TMP_FILE, 'rb').read(), mimetype="application/vnd.ms-excel")
+            response['Content-Disposition'] = 'attachment; filename=report.xls'
+            return response
+
+        else:
+            return render_to_response(request, 'reports/csv.html', context)
+
+    return wrapper
+
+
+@permission_required('add_user')
+@excel_report
+def report_bus(request):
+    return {
+        'title': u"Автобус",
+        'headers': [u"ФИО", u"Ник", u"Телефон", u"Город",],
+        'rows': [(role.profile.name, role.profile.user.username, role.profile.tel, role.profile.city)
+        for role in Role.objects.filter(profile__isnull=False, profile__bus=True).order_by('profile__name').select_related('profile')]
+    }
 
 def change_user(request, user_id):
     if not request.user.is_superuser:

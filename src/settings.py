@@ -19,6 +19,8 @@ PROJECT_PATH = os.path.dirname(__file__)
 data_images_path = os.path.join(PROJECT_PATH, 'media/data/')
 FORCE_SCRIPT_NAME = ""
 
+TMP_FILE = '/tmp/sincity'
+
 FOOD_DAYS = (
     (u'Четверг вечер', 180),
     (u'Пятница утро', 120),

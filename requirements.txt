@@ -10,4 +10,5 @@ logging
 wsgiref
 pytils
 django-debug-toolbar
+xlwt
 -e git+https://github.com/glader/django_yafotki.git#egg=yafotki>=0.4
