@@ -19,6 +19,17 @@ PROJECT_PATH = os.path.dirname(__file__)
 data_images_path = os.path.join(PROJECT_PATH, 'media/data/')
 FORCE_SCRIPT_NAME = ""
 
+FOOD_DAYS = (
+    (u'Четверг вечер', 180),
+    (u'Пятница утро', 120),
+    (u'Пятница день', 220),
+    (u'Пятница вечер', 180),
+    (u'Суббота утро', 120),
+    (u'Суббота день', 220),
+    (u'Суббота вечер', 180),
+    (u'Воскресенье утро', 120),
+    )
+
 # Local time zone for this installation. Choices can be found here:
 # http://www.postgresql.org/docs/8.1/static/datetime-keywords.html#DATETIME-TIMEZONE-SET-TABLE
 # although not all variations may be possible on all operating systems.

@@ -137,6 +137,23 @@ class ProfileForm(ModelForm):
         return divider.join(self.errors_list())
 
 
+class FoodForm(CommonForm):
+    def __init__(self, *args, **kwargs):
+        profile = kwargs.pop('profile')
+        super(FoodForm, self).__init__(*args, **kwargs)
+
+        for number, checkbox in enumerate(settings.FOOD_DAYS):
+            self.fields['field_%s' % number] = forms.BooleanField(label=checkbox[0], required=False, help_text=u"%s руб." % checkbox[1])
+
+        self.profile = profile
+        for number, checkbox in enumerate(settings.FOOD_DAYS):
+            self.initial['field_%s' % number] = profile.food[number] == '1' and True or False
+
+    def save(self):
+        self.profile.food = "".join(self.cleaned_data['field_%s' % number] and '1' or '0' for number in xrange(len(settings.FOOD_DAYS)))
+        self.profile.save()
+
+
 from django.forms.models import inlineformset_factory
 ConnectionFormSet = inlineformset_factory(Role, RoleConnection, fk_name="role", exclude=('is_locked',), extra=1)
 LayerFormSet = inlineformset_factory(Role, LayerConnection, fk_name="role", exclude=('is_locked',), extra=1)

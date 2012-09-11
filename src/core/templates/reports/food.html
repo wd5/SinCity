@@ -1,0 +1,15 @@
+{% extends "reports/base.html" %}
+
+{% block content %}
+    <h1>Питание</h1>
+
+    <table class="b-bordered">
+        {% for row in table %}
+            <tr class="{% cycle 'odd' 'even' %}">
+                {% for cell in row %}
+                    <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -74,6 +74,7 @@ class Profile(models.Model):
     paid = models.BooleanField(verbose_name=u"Взнос внесен", default=False)
     special = models.TextField(verbose_name=u'Спец. способности', null=True, blank=True, default=None)
     bus = models.BooleanField(verbose_name=u"Поедет автобусом", default=False)
+    food = models.CharField(verbose_name=u"Питание", max_length=8, default='0'*8)
 
     locked_fields = models.CharField(max_length="300", verbose_name=u"Замороженные поля", null=True, blank=True)
 
@@ -287,3 +288,11 @@ class Article(models.Model):
         verbose_name = u"Страница"
         verbose_name_plural = u"Страницы"
         ordering = ('order',)
+
+
+def change_user_link(self):
+    return "<a href='" + reverse('change_user', args=[self.id]) + "'>сменить пользователя</a>"
+change_user_link.short_description = u"Сменить пользователя"
+change_user_link.allow_tags = True
+
+User.change_user_link = change_user_link

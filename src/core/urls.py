@@ -14,12 +14,14 @@ urlpatterns = patterns('',
     url(r'^news$', list_detail.object_list, {"queryset": News.objects.all()[5:]}, name='news'),
     url(r'^article/(?P<object_id>\d+)$', list_detail.object_detail, {'queryset': Article.objects.all()}, name='article'),
     url(r'^bus', bus, name='bus'),
+    url(r'^food', food, name='food'),
 
     url(r'^reports/$', reports),
     url(r'^reports/contacts/$', report_contacts),
     url(r'^reports/paid/$', report_paid),
     url(r'^reports/layers/$', report_layers),
     url(r'^reports/players_without_roles/$', report_players_without_roles),
+    url(r'^reports/food/$', report_food, name='report_food'),
 
     url(r'^$', index , name='index'),
     )

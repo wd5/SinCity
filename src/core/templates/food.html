@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load content %}
+
+{% block content %}
+    <h2>Запись на питание</h2>
+
+    {% if save %}
+        <p>Заявка успешно сохранена.</p><br>
+    {% endif %}
+
+    <form action="" method="POST">
+        {{ form.as_p }}
+        <br>
+        <input type="submit" value="Сохранить">
+    </form>
+
+{% endblock %}

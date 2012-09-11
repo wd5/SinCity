@@ -257,6 +257,21 @@ def bus(request):
 
     return render_to_response(request, 'bus.html', context)
 
+
+@login_required
+def food(request):
+    if request.POST:
+        form = FoodForm(request.POST, profile=request.user.get_profile())
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse('food') + '?save=ok')
+    else:
+        form = FoodForm(profile=request.user.get_profile())
+
+    context = {'form': form, 'save': request.GET.get('save')}
+
+    return render_to_response(request, 'food.html', context)
+
 ############################################################################
 # Reports
 
@@ -292,3 +307,31 @@ def report_players_without_roles(request):
     return render_to_response(request, 'reports/players_without_roles.html',
                           {'profiles': Profile.objects.exclude(locked_fields__contains='role').order_by('name')}
                           )
+
+
+@permission_required('add_user')
+def report_food(request):
+    table = []
+    profiles = list(Profile.objects.exclude(food='0'*8))
+
+    table.append([''] + [day[0] for day in settings.FOOD_DAYS] + [''])
+    for profile in profiles:
+        table.append([profile.name] + \
+                     ['V' if profile.food[number] == '1' else '' for number in xrange(len(settings.FOOD_DAYS))] + \
+                     [sum(settings.FOOD_DAYS[number][1] if profile.food[number] == '1' else 0 for number in xrange(len(settings.FOOD_DAYS)))]
+        )
+
+    table.append(
+        [u"Итого"] + \
+        [sum(int(profile.food[number]) for profile in profiles) for number in xrange(len(settings.FOOD_DAYS))] + \
+        [sum(row[-1] and row[-1] or 0 for row in table)]
+    )
+
+    return render_to_response(request, 'reports/food.html', {'table': table})
+
+
+def change_user(request, user_id):
+    if not request.user.is_superuser:
+        raise Http404()
+    request.session['_auth_user_id'] = user_id
+    return HttpResponseRedirect('/')

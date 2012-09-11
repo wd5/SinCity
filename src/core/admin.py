@@ -2,6 +2,11 @@
 from django.contrib import admin
 from models import *
 
+class UserAdmin(admin.ModelAdmin):
+    list_display = (
+        'username', 'email', 'is_staff', 'is_superuser', 'change_user_link'
+        )
+
 class ProfileAdmin(admin.ModelAdmin):
    list_display = ('user', 'name', 'user_username', 'user_email', 'tel', 'city', 'role', 'role_locked', 'form_link')
 
@@ -30,6 +35,10 @@ class NewsAdmin(admin.ModelAdmin):
 
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'order')
+
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
 
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(RoleSection, RoleSectionAdmin)
