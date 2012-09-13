@@ -47,7 +47,7 @@ do
 	s)
 		SAVE=1
 		;;
-	d)	
+	d)
 		DIRECTORY=$OPTARG
 		;;
 	esac
@@ -72,7 +72,7 @@ purl=$purl"?tid="$hash
 #echo $hash
 #echo $purl
 
-#echo "^^^^ debug" 
+#echo "^^^^ debug"
 
 #echo $@
 
@@ -116,22 +116,12 @@ do
 		else
 			file_archivename=$file
 		fi
-		
-		screen -d -m curl --cookie yandex_narod.cookie.txt  -v -e http://narod.yandex.ru  -F 'file=@'"$file_archivename" $url
 
-		sleep 2
-		percent=0
-		while [  $percent -lt 100 ]; do
-		        status=$(curl -s --cookie yandex_narod.cookie.txt $purl"&rnd="$RANDOM)
-		        let percent=$(echo $status | sed -e 's/.*ipercent": \([^,]*\),.*/\1/')
-		        echo $percent"%"
-		        if [ $percent -ne 100 ]; then 
-				sleep 15 
-			fi
-		done
-		if [ $SAVE -ne 1 ] && [ "$file" != "$file_archivename" ]; then 
+		curl --cookie yandex_narod.cookie.txt  -v -e http://narod.yandex.ru  -F 'file=@'"$file_archivename" $url
+
+		if [ $SAVE -ne 1 ] && [ "$file" != "$file_archivename" ]; then
 			echo "removing file $file_archivename"
-			rm -f $file_archivename 
+			rm -f $file_archivename
 		fi
 
 	else
