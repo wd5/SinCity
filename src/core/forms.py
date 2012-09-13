@@ -59,7 +59,7 @@ class LoginForm(CommonForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user', 'locked_fields')
+        exclude = ('user', 'locked_fields', 'food', 'bus')
 
     name = CharField(label=u'ФИО персонажа', max_length=200, widget=TextInput(attrs={'size':'60'}), required=False)
     med  = CharField(label=u'Мед. показатели', max_length=200, widget=TextInput(attrs={'size':'60'}), required=False)
