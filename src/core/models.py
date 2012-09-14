@@ -75,6 +75,7 @@ class Profile(models.Model):
     special = models.TextField(verbose_name=u'Спец. способности', null=True, blank=True, default=None)
     bus = models.BooleanField(verbose_name=u"Поедет автобусом", default=False)
     food = models.CharField(verbose_name=u"Питание", max_length=8, default='0'*8)
+    room = models.ForeignKey('Room', verbose_name=u"Комната", null=True, blank=True, default=None)
 
     locked_fields = models.CharField(max_length="300", verbose_name=u"Замороженные поля", null=True, blank=True)
 
@@ -288,6 +289,34 @@ class Article(models.Model):
         verbose_name = u"Страница"
         verbose_name_plural = u"Страницы"
         ordering = ('order',)
+
+
+class Room(models.Model):
+    floor = models.CharField(max_length=200, verbose_name=u"Этаж", default=u"-")
+    title = models.CharField(max_length=200, verbose_name=u"Название", default=u"-")
+    capacity = models.PositiveIntegerField(verbose_name=u"Вместимость", default=2)
+    current = models.PositiveIntegerField(verbose_name=u"Наполненность", default=0)
+
+    def __unicode__(self):
+        return self.title
+
+    @property
+    def available(self):
+        return self.capacity > self.current
+
+    @classmethod
+    def recalc(cls):
+        rooms = dict((room.id, 0) for room in cls.objects.all())
+        for profile in Profile.objects.filter(room__isnull=False):
+            rooms[profile.room_id] = rooms.get(profile.room_id, 0) + 1
+
+        for id, amount in rooms.items():
+            cls.objects.filter(pk=id).update(current=amount)
+
+    class Meta:
+        verbose_name = u"Комната"
+        verbose_name_plural = u"Комнаты"
+        ordering = ('title',)
 
 
 def change_user_link(self):

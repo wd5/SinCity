@@ -15,6 +15,7 @@ urlpatterns = patterns('',
     url(r'^article/(?P<object_id>\d+)$', list_detail.object_detail, {'queryset': Article.objects.all()}, name='article'),
     url(r'^bus', bus, name='bus'),
     url(r'^food', food, name='food'),
+    url(r'^rooms', rooms, name='rooms'),
 
     url(r'^reports/$', reports),
     url(r'^reports/contacts/$', report_contacts),

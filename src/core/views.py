@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse, Http404
 from django.template import RequestContext
 from django.shortcuts import get_object_or_404
 from django.utils.translation import ugettext as _
+from django.db.models import F
 
 from django.contrib.flatpages.models import FlatPage
 from django.contrib.flatpages.views import flatpage
@@ -370,3 +371,36 @@ def change_user(request, user_id):
         raise Http404()
     request.session['_auth_user_id'] = user_id
     return HttpResponseRedirect('/')
+
+
+def rooms(request):
+    context = {
+        'available_rooms': Room.objects.filter(capacity__gt=F('current')),
+        'profiles': Profile.objects.filter(room__isnull=False)
+        }
+
+    if request.POST and request.user.is_authenticated() \
+            and not request.user.get_profile().is_locked('room'):
+        room_id = int(request.POST['room'])
+        try:
+            room = Room.objects.get(pk=room_id)
+            if room.available:
+                profile = request.user.get_profile()
+                profile.room = room
+                profile.save()
+                print profile.id
+
+                Room.recalc()
+                return HttpResponseRedirect(reverse('rooms') + '?save=ok')
+
+            else:
+                context['message'] = u"Извините, выбранная вами комната уже заполнена."
+
+        except Room.DoesNotExist:
+            context['message'] = u"Нет такой комнаты."
+
+    if request.user.is_authenticated():
+        context['profile'] = request.user.get_profile()
+        context['can_reserve'] = not context['profile'].is_locked('room')
+
+    return render_to_response(request, 'rooms.html', context)

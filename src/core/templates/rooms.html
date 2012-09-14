@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load content %}
+
+{% block content %}
+    <h2>Расселение</h2>
+    <p>При выборе комнаты обращайте внимание, что буквенно-цифровой номер слева - номер комнаты, а цифра справа - количество мест в комнате.</p>
+
+    {% if message %}
+        <p style="font-weight: bold">{{ message }}</p>
+    {% endif %}
+
+    {% if profile and profile.room %}
+        <p>Я забронировал комнату {{ profile.room.title }}.</p>
+    {% endif %}
+
+    <p style="float: left; padding-right: 5px;">Первый этаж<br><img src="http://img-fotki.yandex.ru/get/6613/19044756.143/0_9699a_588568_XL"><br><br>
+        Второй этаж<br>
+        <img src="http://img-fotki.yandex.ru/get/6513/19044756.143/0_9699b_f9a03c46_XL"></p>
+
+    {% regroup profiles by room.title as profiles_list %}
+
+    {% for group in profiles_list %}
+        {{ group.grouper }}: {% for profile in group.list %}{{ profile.role.name }}{% if not forloop.last %}, {% endif %}{% endfor %}
+        {% if not forloop.last %}<br>{% endif %}
+    {% endfor %}
+
+    {% if can_reserve %}
+        <p>
+            <form action="" method="POST">
+                Я хочу жить в комнате
+                <select name="room">
+                    {% for room in available_rooms %}
+                    <option value="{{ room.id }}">{{ room.title }} &nbsp;</option>
+                    {% endfor %}
+                </select>
+                <input type="submit" value="Сохранить">
+            </form>
+        </p>
+    {% endif %}
+{% endblock %}

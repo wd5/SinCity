@@ -36,6 +36,9 @@ class NewsAdmin(admin.ModelAdmin):
 class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'order')
 
+class RoomAdmin(admin.ModelAdmin):
+    list_display = ('title', 'capacity', 'current')
+
 
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
@@ -48,3 +51,4 @@ admin.site.register(Layer)
 admin.site.register(LayerConnection, LayerConnectionAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(Article, ArticleAdmin)
+admin.site.register(Room, RoomAdmin)

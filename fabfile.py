@@ -136,3 +136,8 @@ def update_local_db():
     run("rm sincity.sql")
     local("mysql -uroot %(DATABASE_DB)s < sincity.sql" % globals())
     local("del sincity.sql")
+
+
+def local_migrate():
+    local('cd src && ..\\ENV\\Scripts\\python manage.py schemamigration core --auto')
+    local('cd src && ..\\ENV\\Scripts\\python manage.py migrate')
