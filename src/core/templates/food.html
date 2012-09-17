@@ -1,6 +1,31 @@
 {% extends "base.html" %}
 {% load content %}
 
+{% block head %}
+    <script type="text/javascript">
+        var food = [{% for day in cost %}{{ day }}{% if not forloop.last %}, {% endif %}{% endfor %}];
+        $(function(){
+            for(var i = 0; i < food.length; i ++){
+                $('#id_field_' + i).click(function(){
+                    recalc_cost();
+                })
+            };
+
+            recalc_cost();
+        })
+
+        function recalc_cost(){
+            var sum = 0;
+            for(var i = 0; i < food.length; i ++){
+                if($('#id_field_' + i).attr('checked') == 'checked'){
+                    sum += food[i];
+                }
+            }
+            $('#sum').text(sum);
+        }
+    </script>
+{% endblock %}
+
 {% block content %}
     <h2>Запись на питание</h2>
 
@@ -10,8 +35,9 @@
 
     <form action="" method="POST">
         {{ form.as_p }}
+        <input type="hidden" name="action" value="1">
         <br>
-        <input type="submit" value="Сохранить">
+        Общая сумма: <span id="sum"></span> руб. &nbsp; <input type="submit" value="Сохранить">
     </form>
 
 {% endblock %}

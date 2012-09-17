@@ -268,7 +268,11 @@ def food(request):
     else:
         form = FoodForm(profile=request.user.get_profile())
 
-    context = {'form': form, 'save': request.GET.get('save')}
+    context = {
+        'form': form,
+        'save': request.GET.get('save'),
+        'cost': [day[1] for day in settings.FOOD_DAYS],
+    }
 
     return render_to_response(request, 'food.html', context)
 
