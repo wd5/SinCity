@@ -39,23 +39,25 @@
 	<tr>
 		<td>
 			<div class="sidebar">
-			{% if user %}
-				Привет, {{ user.username }}
-				<br><a href="{% url messages_inbox %}">
-				   {% if messages_inbox_count %}Новых сообщений: {{ messages_inbox_count }}
-				   {% else %}личная почта
-				   {% endif %}</a>
+                {% left_menu %}
 
-				{% if is_superuser %}
-				   <div><a href="/admin/">Админка</a></div>
-                   <div><a href="/reports/">Отчеты</a></div>
-				{% endif %}
+                {% if user %}
+                    Привет, {{ user.username }}
+                    <br><a href="{% url messages_inbox %}">
+                       {% if messages_inbox_count %}Новых сообщений: {{ messages_inbox_count }}
+                       {% else %}личная почта
+                       {% endif %}</a>
 
-				<br><a href="{% url logout %}">Выйти</a>
-				<br /><br />
-			{% else %}
-				<a href="{% url login %}" title="Войти">Войти на сайт</a>
-			{% endif %}
+                    {% if is_superuser %}
+                       <div><a href="/admin/">Админка</a></div>
+                       <div><a href="/reports/">Отчеты</a></div>
+                    {% endif %}
+
+                    <br><a href="{% url logout %}">Выйти</a>
+                    <br /><br />
+                {% else %}
+                    <a href="{% url login %}" title="Войти">Войти на сайт</a>
+                {% endif %}
 			</div>
 
 		</td>

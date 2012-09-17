@@ -34,7 +34,24 @@ class NewsAdmin(admin.ModelAdmin):
 
 
 class ArticleAdmin(admin.ModelAdmin):
-    list_display = ('title', 'order')
+    list_display = ('indent_title', 'order', 'path')
+    actions = ['recalc_paths']
+    ordering = ('path',)
+
+    def recalc_paths(self, request, queryset):
+        for number, article in enumerate(Article.objects.filter(parent__isnull=True).order_by('order')):
+            article.path = "%02d" % (number + 1)
+            article.save()
+
+            self._recalc_article_children(article)
+    recalc_paths.short_description = u"Пересчитать порядок"
+
+    def _recalc_article_children(self, article):
+        for number, child in enumerate(Article.objects.filter(parent=article).order_by('order')):
+            child.path = article.path + "%02d" % (number + 1)
+            child.save()
+            self._recalc_article_children(child)
+
 
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('title', 'capacity', 'current')

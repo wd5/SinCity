@@ -1,0 +1,5 @@
+<div class="b-left_menu">
+    {% for article in articles %}
+        <div><a href="{% if article.redirect %}{{ article.redirect }}{% else %}{% url article article.id %}{% endif %}">{{ article.title }}</a></div>
+    {% endfor %}
+</div>

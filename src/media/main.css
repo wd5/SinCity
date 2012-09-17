@@ -552,3 +552,19 @@ body .ui-tooltip { border-width:2px; }
     border: 1px solid gray;
     padding: 3px;
 }
+
+.b-left_menu
+{
+    padding-bottom: 20px;
+}
+
+.b-left_menu a:link, .b-left_menu a:hover,
+.b-left_menu a:active, .b-left_menu a:visited
+{
+    color: #ccc;
+}
+
+.b-left_menu div
+{
+    padding-bottom: 5px;
+}

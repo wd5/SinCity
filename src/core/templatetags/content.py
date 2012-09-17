@@ -41,9 +41,16 @@ def last_news():
 
 @register.inclusion_tag('blocks/b-navigation.html')
 def navigation():
-    articles = Article.objects.filter(parent__isnull=True)
+    parent = Article.objects.get(title=u'Верхнее меню')
+    articles = Article.objects.filter(parent=parent)
     subarticles = Article.objects.filter(parent__in=[article.id for article in articles])
     for article in articles:
         article.subarticles = [subarticle for subarticle in subarticles if subarticle.parent_id == article.id]
+    return {'articles': articles}
 
+
+@register.inclusion_tag('blocks/b-left_menu.html')
+def left_menu():
+    parent = Article.objects.get(title=u'Боковое меню')
+    articles = Article.objects.filter(parent=parent)
     return {'articles': articles}

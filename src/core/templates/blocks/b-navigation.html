@@ -3,25 +3,16 @@
 
 		{% for article in articles %}
 			<li class="page_item page-item-{{ article.id }}">
-				<a href="{% url article article.id %}" title="{{ article.title }}">{{ article.title }}</a>
+				<a href="{% if article.redirect %}{{ article.redirect }}{% else %}{% url article article.id %}{% endif %}" title="{{ article.title }}">{{ article.title }}</a>
 
 			{% if article.subarticles %}
 				<ul class='children'>
 					{% for subarticle in article.subarticles %}
-						<li class="page_item page-item-{{ subarticle.id }}"><a href="{% url article subarticle.id %}" title="{{ subarticle.title }}">{{ subarticle.title }}</a></li>
+						<li class="page_item page-item-{{ subarticle.id }}"><a href="{% if subarticle.redirect %}{{ subarticle.redirect }}{% else %}{% url article subarticle.id %}{% endif %}" title="{{ subarticle.title }}">{{ subarticle.title }}</a></li>
 					{% endfor %}
 				</ul>
 			{% endif %}
 			</li>
 		{% endfor %}
-
-		<li class="page_item page-item-nav"><a href="{% url roles %}" title="Роли">Список ролей</a></li>
-        <li class="page_item page-item-nav"><a href="{% url form %}" title="Роли">Форма заявки</a>
-            <ul class='children'>
-                <li class="page_item"><a href="{% url food %}" title="Запись на питание">Запись на питание</a></li>
-                <li class="page_item"><a href="{% url bus %}" title="Запись на автобус">Запись на автобус</a></li>
-                <li class="page_item"><a href="{% url rooms %}" title="Поселение">Поселение</a></li>
-            </ul>
-        </li>
 	</ul>
 </div>
