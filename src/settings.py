@@ -7,7 +7,7 @@ DEBUG = False
 TEMPLATE_DEBUG = False
 
 ADMINS = (('Glader', 'glader.ru@gmail.com'),)
-MANAGERS = ADMINS + (('Senny', 'senni@mail.ru'),)
+MANAGERS = (('Senny', 'senni@mail.ru'),)
 SERVER_EMAIL = DEFAULT_FROM_EMAIL = 'glader.ru@gmail.com'
 
 LOGIN_URL = '/auth/login'
