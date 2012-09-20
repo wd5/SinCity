@@ -5,9 +5,10 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.conf import settings
 from django.core.urlresolvers import reverse
-from django.core.mail import send_mail, mail_managers
 
 from yafotki.fields import YFField
+
+from .utils import email
 
 
 class GenericManager( models.Manager ):
@@ -142,14 +143,10 @@ class Profile(models.Model):
                     report += u"%s: '%s' -> '%s'\n" % (field.verbose_name, getattr(prev, field.name) or '-', getattr(self, field.name) or '-')
 
             if report:
-                report = u"Измененные поля профиля [http://sincity2012.ru/form?change_user=%s]:\n%s" % (self.user.pk, report)
-                emails = [rec[1] for rec in settings.MANAGERS] + [self.user.email]
-
-                send_mail(
+                email(
                     u"SinCity 2012: изменения в профиле игрока %s" % self.name,
-                    report,
-                    settings.SERVER_EMAIL,
-                    emails,
+                    u"Измененные поля профиля [http://sincity2012.ru/form?change_user=%s]:\n%s" % (self.user.pk, report),
+                    [self.user.email],
                 )
 
         return super(Profile, self).save(*args, **kwargs)
@@ -166,9 +163,10 @@ class RoleConnection(models.Model):
     is_locked = models.BooleanField(verbose_name=u"Заморожено", default=False)
 
     def save(self, *args, **kwargs):
-        emails = [rec[1] for rec in settings.MANAGERS]
         if self.role.profile:
-            emails.append(self.role.profile.user.email)
+            emails = [self.role.profile.user.email]
+        else:
+            emails = []
 
         if self.pk:
             prev = self.__class__.objects.get(pk=self.pk)
@@ -177,21 +175,20 @@ class RoleConnection(models.Model):
                          (self.role.profile.user.pk, self.role,
                           self.role_rel, getattr(prev,'comment') or '-', getattr(self, 'comment') or '-')
 
-                send_mail(u"SinCity 2012: изменения в связях роли %s" % self.role,
-                            report,
-                            None,
-                            emails,
-                            )
+                email(
+                    u"SinCity 2012: изменения в связях роли %s" % self.role,
+                    report,
+                    emails,
+                )
         else:
             if self.role.profile:
                 profile = self.role.profile
             else:
                 profile = Profile.objects.filter(role=self.role)[0]
 
-            send_mail(u"SinCity 2012: новая связь между ролями",
+            email(u"SinCity 2012: новая связь между ролями",
                 u"Анкета: http://sincity2012.ru/form?change_user=%s\n\n%s -> %s\n\n%s"
                 % (profile.user.pk, self.role, self.role_rel, self.comment),
-                None,
                 emails,
             )
 
@@ -219,7 +216,7 @@ class LayerConnection(models.Model):
     is_locked = models.BooleanField(verbose_name=u"Заморожено", default=False)
 
     def save(self, *args, **kwargs):
-        emails = [rec[1] for rec in settings.MANAGERS]
+        emails = []
         if self.role and self.role.profile:
             emails.append(self.role.profile.user.email)
         if self.layer_id == 6:
@@ -230,16 +227,15 @@ class LayerConnection(models.Model):
             if getattr(self, 'comment') != getattr(prev, 'comment'):
                 report = u"Измененный пласт: %s -> %s:\nБыло: %s\nСтало: '%s'" % (self.role, self.layer, getattr(prev,'comment') or '-', getattr(self, 'comment') or '-')
 
-                send_mail(u"SinCity 2012: изменения в пласте роли %s" % self.role,
-                            report,
-                            settings.SERVER_EMAIL,
-                            emails,
-                            )
+                email(
+                    u"SinCity 2012: изменения в пласте роли %s" % self.role,
+                    report,
+                    emails,
+                )
         else:
-            send_mail(
+            email(
                 u"SinCity 2012: новый пласт роли %s" % self.role,
                 u"%s -> %s\n\n%s" % (self.role, self.layer, self.comment),
-                settings.SERVER_EMAIL,
                 emails,
             )
 

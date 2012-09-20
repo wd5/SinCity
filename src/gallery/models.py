@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
 
-from django.contrib.auth.models import User
 from django.db import models
-from django.conf import settings
-from django.core.urlresolvers import reverse
-from django.core.mail import send_mail, mail_managers
 
 from yafotki.fields import YFField
 

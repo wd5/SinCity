@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.conf import settings
 
 from models import *
+from .utils import email
 
 class CommonForm(Form):
     def errors_list(self):
@@ -59,7 +60,7 @@ class LoginForm(CommonForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        exclude = ('user', 'locked_fields', 'food', 'bus', 'paid')
+        exclude = ('user', 'locked_fields', 'food', 'bus', 'paid', 'room')
 
     name = CharField(label=u'ФИО персонажа', max_length=200, widget=TextInput(attrs={'size':'60'}), required=False)
     med  = CharField(label=u'Мед. показатели', max_length=200, widget=TextInput(attrs={'size':'60'}), required=False)
@@ -203,10 +204,10 @@ class ComposeForm(forms.Form):
         msg.save()
         message_list.append(msg)
 
-        send_mail(
+        email(
             u"SinCity2012: новое сообщение в личных",
             u"Вам было послано сообщение. Вы можете прочитать его по ссылке http://%s%s" % (settings.DOMAIN, reverse('messages_inbox')),
-            settings.DEFAULT_FROM_EMAIL,
             [user.email],
+            admins=False,
         )
         return message_list
