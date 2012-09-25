@@ -392,7 +392,6 @@ def rooms(request):
                 profile = request.user.get_profile()
                 profile.room = room
                 profile.save()
-                print profile.id
 
                 Room.recalc()
                 return HttpResponseRedirect(reverse('rooms') + '?save=ok')

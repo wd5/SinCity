@@ -47,10 +47,15 @@
             <tr class="special_role"><td class="title"><small>или создайте свою</small></td><td>Имя: {{ profile_form.role_name }}</td></tr>
             <tr class="special_role"><td class="title">&nbsp;</td><td>Профессия: {{ profile_form.role_profession }}</td></tr>
         {% else %}
-           <tr><td class="title">Роль</td><td>{{ profile_form.instance.role.rolesection.title }},
-                                              {{ profile_form.instance.role.name }},
-                                              {{ profile_form.instance.role.profession }} {% locker 'role' profile_form is_superuser %}
-                                              </td></tr>
+           <tr><td class="title">Роль {% locker 'role' profile_form is_superuser %}</td><td>
+               <table class="profile_table">
+                   <tr><td>Имя</td><td>{{ profile_form.instance.role.name }}</td></tr>
+                   <tr><td>Раздел</td><td>{{ profile_form.instance.role.rolesection.title }}</td></tr>
+                   <tr><td>Профессия</td><td>{{ profile_form.instance.role.profession }}</td></tr>
+                   <tr><td>Наличность</td><td>{{ profile_form.instance.role.cache }}</td></tr>
+                   <tr><td>Деньги на счете</td><td>{{ profile_form.instance.role.account }}</td></tr>
+               </table>
+           </td></tr>
         {% endif %}
         <tr><td>&nbsp;</td><td></td></tr>
 

@@ -40,6 +40,9 @@ class Role(models.Model):
     name = models.CharField(max_length=200, verbose_name=u"ФИО")
     profession = models.CharField(max_length=200, verbose_name=u"Профессия")
     description = models.TextField(verbose_name=u"Описание", null=True, blank=True)
+    cache = models.IntegerField(verbose_name=u"Наличность", default=0)
+    account = models.IntegerField(verbose_name=u"Деньги на счете", default=0)
+
     order = models.IntegerField(verbose_name=u"Порядок", default=10000)
     profile = models.ForeignKey('Profile', verbose_name=u'Профиль', null=True, blank=True, related_name="locked_role")
 
