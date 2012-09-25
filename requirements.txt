@@ -12,3 +12,4 @@ pytils
 django-debug-toolbar
 xlwt
 -e git+https://github.com/glader/django_yafotki.git#egg=yafotki>=0.4
+-e git+https://github.com/glader/django_change_user#egg=change_user

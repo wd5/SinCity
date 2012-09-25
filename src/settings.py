@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # Django settings for perspectiva project.
-import os, platform, sys
+import os
 
 APPEND_SLASH = False
 DEBUG = False
@@ -107,6 +107,7 @@ INSTALLED_APPS = (
     'newspaper',
     'messages',
     'pytils',
+    'change_user',
 )
 
 #
