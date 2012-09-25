@@ -103,6 +103,9 @@ class ProfileForm(ModelForm):
 
 
     def clean_role(self, *args, **kwargs):
+        if 'role' in self.fields.keys() and self.cleaned_data['role'] is None:
+            return self.initial['role']
+
         if int(self.cleaned_data['role']) == 0 and not \
             (self.data.get('role_name') or self.data.get('role_profession')):
             raise ValidationError(u"Заполните поля роли, чтобы создать ее")
