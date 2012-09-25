@@ -11,12 +11,12 @@
 
         {% for item in group.list %}
             <tr class="{% cycle 'odd' 'even' %}">
-                <td>{{ item.role }}</td>
-                <td>{{ item.comment }}</td>
+                <td style="border-bottom: 1px solid #666;">{{ item.role }}</td>
+                <td style="padding-bottom: 8px; border-bottom: 1px solid #666;">{{ item.comment }}&nbsp;</td>
             </tr>
         {% endfor %}
     </table>
     {% endfor %}
-    
+
 
 {% endblock %}
