@@ -380,7 +380,7 @@ def change_user(request, user_id):
 def rooms(request):
     context = {
         'available_rooms': Room.objects.filter(capacity__gt=F('current')),
-        'profiles': Profile.objects.filter(room__isnull=False)
+        'profiles': Profile.objects.filter(room__isnull=False).order_by('room__title')
         }
 
     if request.POST and request.user.is_authenticated() \
