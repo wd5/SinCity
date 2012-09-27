@@ -11,7 +11,6 @@ urlpatterns = patterns('',
     url(r'^auth/password_reset/done/$', 'django.contrib.auth.views.password_reset_done', name='password_reset_done'),
     url(r'^auth/reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm'),
     url(r'^auth/reset/done/$', 'django.contrib.auth.views.password_reset_complete'),
-    url('^change_user/(\d+)$', 'core.views.change_user', name="change_user"),
 
     url(r'^admin/', include(admin.site.urls), name="admin"),
     (r'^newspaper/', include('newspaper.urls')),

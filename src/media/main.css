@@ -568,3 +568,21 @@ body .ui-tooltip { border-width:2px; }
 {
     padding-bottom: 5px;
 }
+
+.b-break-page
+{
+    page-break-after: always;
+}
+
+.b-full-report
+{
+    border-collapse: collapse;
+}
+
+.b-full-report th, .b-full-report td
+{
+    text-align: left;
+    padding: 3px;
+    border: 1px solid black;
+    vertical-align: top;
+}

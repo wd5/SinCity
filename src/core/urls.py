@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     url(r'^reports/players_without_roles/$', report_players_without_roles),
     url(r'^reports/food/$', report_food, name='report_food'),
     url(r'^reports/bus/$', report_bus, name='report_bus'),
+    url(r'^reports/full/$', report_full, name='report_full'),
 
     url(r'^$', index , name='index'),
     )

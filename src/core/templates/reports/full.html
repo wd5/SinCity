@@ -1,0 +1,111 @@
+{% load content %}<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
+
+<head>
+    <title>{% block title %}SinCity 2012{% endblock %}</title>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
+
+    <link rel="stylesheet" href="{% MEDIA_URL %}main.css?6"/>
+
+</head>
+<body>
+<!-- 1. Самый главный (желательно что бы он распечатывался с сайта нажатием
+какой-нибудь специальной кнопочки
+Фио+телефон
+
+Вся информация с формы заявки максимально компактно
+Квента
+С новой страницы Пласты и связи -->
+{% for profile in profiles %}
+<div class="b-break-page">
+    <h2>{{ profile.name }} ({{ profile.tel }})</h2>
+    <table class="b-full-report">
+        <tr>
+            <th>Ник</th>
+            <td>{{ profile.user.username }}</td>
+            <th>Возраст</th>
+            <td>{{ profile.age }}</td>
+        </tr>
+        <tr>
+            <th>Город</th>
+            <td>{{ profile.city }}</td>
+            <th>Телефон</th>
+            <td>{{ profile.tel }}</td>
+        </tr>
+        <tr>
+            <th>Мед.</th>
+            <td>{{ profile.med }}</td>
+            <th>ICQ</th>
+            <td>{{ profile.icq }}</td>
+        </tr>
+
+        <tr>
+            <th>Роль</th>
+            <td colspan="3">{{ profile.role.full_info }}</td>
+        </tr>
+        <tr>
+            <th>Деньги</th>
+            <td colspan="3">
+                наличные: {{ profile.role.cache }},
+                банк: {{ profile.role.account }}
+            </td>
+        </tr>
+        <tr>
+            <th>Цель</th>
+            <td>{{ profile.goal }}</td>
+            <th>Оружие</th>
+            <td>{{ profile.gun }}</td>
+        </tr>
+        <tr>
+            <th>Мечта</th>
+            <td>{{ profile.dream }}</td>
+            <th>Спец. способности</th>
+            <td>{{ profile.special }}</td>
+        </tr>
+        <tr>
+            <td colspan="4"><strong>Квента:</strong>
+                {{ profile.quest|linebreaks }}
+            </td>
+        </tr>
+        <tr>
+            <th>Комната</th>
+            <td colspan="3">{{ profile.room|default:'-' }}</td>
+        </tr>
+    </table>
+</div>
+
+{% if profile.additional_info %}
+<div class="b-break-page">
+    {% if profile.connections %}
+    <h3>Связи</h3>
+    <table class="b-full-report">
+        {% for connection in profile.connections %}
+        <tr>
+            <th>{{ connection.role_rel|default:"-" }}</th>
+            <td>{{ connection.comment }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+
+    {% if profile.layers %}
+    <br>
+    <h3>Пласты</h3>
+    <table class="b-full-report">
+        {% for layer in profile.layers %}
+        <tr>
+            <th>{{ layer.layer }}</th>
+            <td>{{ layer.comment }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+{% endif %}
+
+{% endfor %}
+</body>
+</html>

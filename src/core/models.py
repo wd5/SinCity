@@ -48,6 +48,10 @@ class Role(models.Model):
 
     def __unicode__(self): return self.name
 
+    def full_info(self):
+        return u"[%s] %s, %s" % \
+               (self.rolesection.title, self.name, self.profession)
+
     class Meta:
         verbose_name = u"Роль"
         verbose_name_plural = u"Роли"
@@ -334,11 +338,3 @@ class Room(models.Model):
         verbose_name = u"Комната"
         verbose_name_plural = u"Комнаты"
         ordering = ('title',)
-
-
-def change_user_link(self):
-    return "<a href='" + reverse('change_user', args=[self.id]) + "'>сменить пользователя</a>"
-change_user_link.short_description = u"Сменить пользователя"
-change_user_link.allow_tags = True
-
-User.change_user_link = change_user_link

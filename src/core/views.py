@@ -370,11 +370,24 @@ def report_bus(request):
         for role in Role.objects.filter(profile__isnull=False, profile__bus=True).order_by('profile__name').select_related('profile')]
     }
 
-def change_user(request, user_id):
-    if not request.user.is_superuser:
-        raise Http404()
-    request.session['_auth_user_id'] = user_id
-    return HttpResponseRedirect('/')
+
+@permission_required('add_user')
+def report_full(request):
+    profiles = Profile.objects.filter(role__isnull=False, locked_fields__contains='role').order_by('name').select_related('role')
+    if request.GET.get('n'):
+        profiles = profiles[:int(request.GET.get('n'))]
+    if request.GET.get('id'):
+        profiles = profiles.filter(user=int(request.GET.get('id')))
+
+    for profile in profiles:
+        profile.connections = list(RoleConnection.objects.filter(role=profile.role))
+        profile.layers = list(LayerConnection.objects.filter(role=profile.role))
+        profile.additional_info = profile.connections or profile.layers
+
+    return render_to_response(request, 'reports/full.html',
+        {'profiles': profiles}
+    )
+
 
 
 def rooms(request):
