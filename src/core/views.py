@@ -377,7 +377,7 @@ def report_full(request):
     if request.GET.get('n'):
         profiles = profiles[:int(request.GET.get('n'))]
     if request.GET.get('id'):
-        profiles = profiles.filter(user=int(request.GET.get('id')))
+        profiles = profiles.filter(pk=int(request.GET.get('id')))
 
     for profile in profiles:
         profile.connections = list(RoleConnection.objects.filter(role=profile.role))

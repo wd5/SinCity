@@ -94,6 +94,11 @@ class Profile(models.Model):
     form_link.short_description = u"Анкета"
     form_link.allow_tags = True
 
+    def print_link(self):
+        return "<a href='" + reverse('report_full') + '?id=%s' % self.id + "'>печать</a>"
+    print_link.short_description = u"Печать"
+    print_link.allow_tags = True
+
     def user_email(self):
         return self.user.email
     user_email.short_description = u"Email"

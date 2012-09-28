@@ -3,7 +3,7 @@ from django.contrib import admin
 from models import *
 
 class ProfileAdmin(admin.ModelAdmin):
-   list_display = ('user', 'name', 'user_username', 'user_email', 'tel', 'city', 'role', 'role_locked', 'form_link')
+   list_display = ('user', 'name', 'user_username', 'user_email', 'tel', 'city', 'role', 'role_locked', 'form_link', 'print_link')
 
    def lookup_allowed(self, *args, **kwargs):
        return True
