@@ -396,7 +396,13 @@ def rooms(request):
         'profiles': Profile.objects.filter(room__isnull=False).order_by('room__title')
         }
 
-    if request.POST and request.user.is_authenticated() \
+    if request.user.is_authenticated():
+        context['profile'] = request.user.get_profile()
+        context['can_reserve'] = not context['profile'].is_locked('room')
+
+    context['can_reserve'] = False  # Поселение окончено
+
+    if context['can_reserve'] and request.POST and request.user.is_authenticated() \
             and not request.user.get_profile().is_locked('room'):
         room_id = int(request.POST['room'])
         try:
@@ -414,9 +420,5 @@ def rooms(request):
 
         except Room.DoesNotExist:
             context['message'] = u"Нет такой комнаты."
-
-    if request.user.is_authenticated():
-        context['profile'] = request.user.get_profile()
-        context['can_reserve'] = not context['profile'].is_locked('room')
 
     return render_to_response(request, 'rooms.html', context)
