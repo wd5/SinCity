@@ -372,6 +372,17 @@ def report_bus(request):
 
 
 @permission_required('add_user')
+@excel_report
+def report_money(request):
+    return {
+        'title': u"Деньги",
+        'headers': [u"ФИО", u"Ник", u"Наличка", u"На счете",],
+        'rows': [(role.profile.name, role.profile.user.username, role.cache, role.account)
+                 for role in Role.objects.filter(profile__isnull=False).order_by('profile__name').select_related('profile')]
+    }
+
+
+@permission_required('add_user')
 def report_full(request):
     profiles = Profile.objects.filter(role__isnull=False, locked_fields__contains='role').order_by('name').select_related('role')
     if request.GET.get('n'):
@@ -387,7 +398,6 @@ def report_full(request):
     return render_to_response(request, 'reports/full.html',
         {'profiles': profiles}
     )
-
 
 
 def rooms(request):
