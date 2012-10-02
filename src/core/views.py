@@ -376,9 +376,9 @@ def report_bus(request):
 def report_money(request):
     return {
         'title': u"Деньги",
-        'headers': [u"ФИО", u"Ник", u"Наличка", u"На счете",],
-        'rows': [(role.profile.name, role.profile.user.username, role.cache, role.account)
-                 for role in Role.objects.filter(profile__isnull=False).order_by('profile__name').select_related('profile')]
+        'headers': [u"Роль", u"Ник", u"Наличка", u"На счете",],
+        'rows': [(role.name, role.profile.user.username, role.cache, role.account)
+                 for role in Role.objects.filter(profile__isnull=False).order_by('name').select_related('profile')]
     }
 
 
